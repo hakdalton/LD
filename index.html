@@ -357,7 +357,7 @@
     <!-- Letter Modal -->
     <div id="letter-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000;">
         <!-- Blurred Background -->
-        <div id="letter-backdrop" onclick="closeLetter()" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);"></div>
+        <div id="letter-backdrop" onclick="closeLetter()" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"></div>
         
         <!-- Letter Content -->
         <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 2rem; overflow-y: auto;">
@@ -376,7 +376,7 @@
                         <p style="margin: 0.25rem 0;">Violethof 33</p>
                         <p style="margin: 0.25rem 0;">2272 JP Voorburg</p>
                         <p style="margin: 0.25rem 0;">0622316125</p>
-                        <p style="margin: 0.25rem 0;">hak@daltonvoorburg.nl</p>
+                        <p style="margin: 0.25rem 0;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="09616862496d68657d66677f66667b6b7c7b6e276765">[email&#160;protected]</a></p>
                     </div>
                     
                     <div style="margin-bottom: 2rem;">
@@ -424,7 +424,7 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         let currentSlide = 0;
         const totalSlides = 7;
         const slidesContainer = document.getElementById('slides-container');
@@ -530,13 +530,4 @@
         });
 
         function handleSwipe() {
-            if (touchStartX - touchEndX > 75) {
-                navigateToSlide(currentSlide + 1);
-            }
-            if (touchStartX - touchEndX < -75) {
-                navigateToSlide(currentSlide - 1);
-            }
-        }
-    </script>
-</body>
-</html>
+            if (touchStartX - touch
