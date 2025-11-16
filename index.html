@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bart Portfolio - Dalton College Voorburg</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        .slide-container {
+            display: flex;
+            transition: transform 0.5s ease-out;
+            height: 100%;
+        }
+        
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .card {
+            background: linear-gradient(to bottom right, rgb(31 41 55), rgb(55 65 81));
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 3rem;
+            transform: scale(1);
+            transition: transform 0.5s;
+            border: 1px solid rgb(75 85 99);
+            max-width: 64rem;
+            width: 100%;
+        }
+        
+        .card.wide {
+            max-width: 72rem;
+        }
+        
+        .card:hover {
+            transform: scale(1.02);
+        }
+        
+        .icon-box {
+            width: 6rem;
+            height: 6rem;
+            margin: 0 auto 2rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.9;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .nav-button:hover {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .nav-button.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .nav-button.left {
+            left: 2rem;
+        }
+        
+        .nav-button.right {
+            right: 2rem;
+        }
+        
+        .dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .dot.active {
+            background: rgb(59 130 246);
+            transform: scale(1.25);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .dot.inactive {
+            background: rgb(107 114 128);
+        }
+        
+        .dot.inactive:hover {
+            background: rgb(156 163 175);
+            transform: scale(1.1);
+        }
+        
+        .progress-bar {
+            height: 0.25rem;
+            background: rgb(75 85 99);
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, rgb(59 130 246), rgb(168 85 247), rgb(236 72 153));
+            transition: width 0.5s ease-out;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .drive-container {
+            background: rgb(17 24 39);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid rgb(75 85 99);
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+        }
+        
+        .drive-container iframe {
+            width: 100%;
+            height: 500px;
+            border-radius: 0.5rem;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div style="height: 100vh; width: 100%; background: linear-gradient(to bottom right, rgb(55 65 81), rgb(75 85 99), rgb(55 65 81)); display: flex; flex-direction: column; overflow: hidden;">
+        
+        <!-- Main Content Area -->
+        <div id="main-content" style="flex: 1; position: relative; overflow: hidden;">
+            <!-- Slides Container -->
+            <div id="slides-container" class="slide-container">
+                <!-- Slide 1 -->
+                <div class="slide">
+                    <div class="card">
+                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(96 165 250), rgb(37 99 235));">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                        </div>
+                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Bart Portfolio</h1>
+                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Docent LO & Bewegingswetenschappen</h2>
+                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(96 165 250), rgb(37 99 235));"></div>
+                        <p style="font-size: 1.25rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; max-width: 42rem; margin: 0 auto;">17 jaar ervaring in onderwijs en innovatie</p>
+                        <div style="margin-top: 2rem; text-align: center;">
+                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">01 / 06</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <div class="card">
+                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(192 132 252), rgb(147 51 234));">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        </div>
+                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">ICT & Innovatie</h1>
+                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Technologische Ontwikkelingen</h2>
+                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(192 132 252), rgb(147 51 234));"></div>
+                        <p style="font-size: 1.25rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; max-width: 42rem; margin: 0 auto;">Google Apps Script • Web Development • AI Integratie • Studiewijzer Systemen</p>
+                        <div style="margin-top: 2rem; text-align: center;">
+                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">02 / 06</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <div class="card">
+                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(134 239 172), rgb(22 163 74));">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                        </div>
+                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Expertise</h1>
+                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Kerncompetenties</h2>
+                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(134 239 172), rgb(22 163 74));"></div>
+                        <p style="font-size: 1.25rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; max-width: 42rem; margin: 0 auto;">ICT Coördinator • Privacy Officer • Webmaster • Google Workspace Expert</p>
+                        <div style="margin-top: 2rem; text-align: center;">
+                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">03 / 06</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="slide">
+                    <div class="card">
+                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(251 146 60), rgb(234 88 12));">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        </div>
+                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Projecten</h1>
+                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Digitale Leermiddelen</h2>
+                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(251 146 60), rgb(234 88 12));"></div>
+                        <p style="font-size: 1.25rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; max-width: 42rem; margin: 0 auto;">Video Analyse Tools • Workout Timers • Sport Delay Systemen • Studiewijzer Apps</p>
+                        <div style="margin-top: 2rem; text-align: center;">
+                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">04 / 06</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5 -->
+                <div class="slide">
+                    <div class="card">
+                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(244 114 182), rgb(236 72 153));">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Team & Begeleiding</h1>
+                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Samenwerking & Ontwikkeling</h2>
+                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(244 114 182), rgb(236 72 153));"></div>
+                        <p style="font-size: 1.25rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; max-width: 42rem; margin: 0 auto;">Collegiale Consultatie • Mentorschap • Professionele Ontwikkeling</p>
+                        <div style="margin-top: 2rem; text-align: center;">
+                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">05 / 06</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 6 - Google Drive -->
+                <div class="slide">
+                    <div class="card wide">
+                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(103 232 249), rgb(8 145 178));">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+                        </div>
+                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Mijn Bestanden</h1>
+                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Portfolio Documenten</h2>
+                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(103 232 249), rgb(8 145 178));"></div>
+                        
+                        <div class="drive-container">
+                            <iframe src="https://drive.google.com/embeddedfolderview?id=11EtEpNu74M3g1Gh5UmozeJWg6a7Kyjk-#grid"></iframe>
+                        </div>
+                        <p style="font-size: 0.875rem; color: rgb(156 163 175); text-align: center; margin-top: 1rem;">
+                            Klik op een bestand om te openen
+                        </p>
+                        
+                        <div style="margin-top: 2rem; text-align: center;">
+                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">06 / 06</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Arrows -->
+            <button id="prev-btn" class="nav-button left hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(31 41 55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button id="next-btn" class="nav-button right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(31 41 55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div style="background: rgba(31, 41, 55, 0.95); backdrop-filter: blur(12px); border-top: 1px solid rgb(75 85 99); padding: 1.5rem 2rem;">
+            <div id="dots-container" style="max-width: 64rem; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                <!-- Dots will be generated by JS -->
+            </div>
+            
+            <div style="max-width: 64rem; margin: 0 auto;">
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 16.67%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Keyboard navigation hint -->
+        <div style="position: absolute; bottom: 6rem; right: 2rem; font-size: 0.875rem; color: rgb(156 163 175); opacity: 0.7;">
+            Gebruik ← → of swipe
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 6;
+        const slidesContainer = document.getElementById('slides-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressFill = document.getElementById('progress-fill');
+        const dotsContainer = document.getElementById('dots-container');
+
+        // Generate dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = i === 0 ? 'dot active' : 'dot inactive';
+            dot.onclick = () => navigateToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateUI() {
+            // Update slides position
+            slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update buttons
+            prevBtn.classList.toggle('hidden', currentSlide === 0);
+            nextBtn.classList.toggle('hidden', currentSlide === totalSlides - 1);
+            
+            // Update dots
+            const dots = dotsContainer.children;
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = i === currentSlide ? 'dot active' : 'dot inactive';
+            }
+            
+            // Update progress bar
+            progressFill.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+        }
+
+        function navigateToSlide(index) {
+            if (index >= 0 && index < totalSlides) {
+                currentSlide = index;
+                updateUI();
+            }
+        }
+
+        prevBtn.onclick = () => navigateToSlide(currentSlide - 1);
+        nextBtn.onclick = () => navigateToSlide(currentSlide + 1);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') navigateToSlide(currentSlide - 1);
+            if (e.key === 'ArrowRight') navigateToSlide(currentSlide + 1);
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.getElementById('main-content').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.getElementById('main-content').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchStartX - touchEndX > 75) {
+                navigateToSlide(currentSlide + 1);
+            }
+            if (touchStartX - touchEndX < -75) {
+                navigateToSlide(currentSlide - 1);
+            }
+        }
+    </script>
+</body>
+</html>
