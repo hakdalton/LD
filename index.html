@@ -3,531 +3,569 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bart Portfolio - Dalton College Voorburg</title>
+    <title>Loopbaan Portfolio | Onderwijs & ICT</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .slide-container {
-            display: flex;
-            transition: transform 0.5s ease-out;
-            height: 100%;
-        }
-        
-        .slide {
-            min-width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-        
-        .card {
-            background: linear-gradient(to bottom right, rgb(31 41 55), rgb(55 65 81));
-            border-radius: 1.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            padding: 3rem;
-            transform: scale(1);
-            transition: transform 0.5s;
-            border: 1px solid rgb(75 85 99);
-            max-width: 64rem;
-            width: 100%;
-        }
-        
-        .card:hover {
-            transform: scale(1.02);
-        }
-        
-        .icon-box {
-            width: 6rem;
-            height: 6rem;
-            margin: 0 auto 2rem;
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-        }
-        
-        .nav-button {
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4338ca; }
+
+        .timeline-line {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 3.5rem;
-            height: 3.5rem;
-            border-radius: 50%;
-            background: white;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.9;
-            transition: all 0.3s;
-            cursor: pointer;
-            border: none;
-        }
-        
-        .nav-button:hover {
-            opacity: 1;
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        .nav-button.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .nav-button.left {
-            left: 2rem;
-        }
-        
-        .nav-button.right {
-            right: 2rem;
-        }
-        
-        .dot {
-            width: 0.75rem;
-            height: 0.75rem;
-            border-radius: 50%;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .dot.active {
-            background: rgb(59 130 246);
-            transform: scale(1.25);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-        }
-        
-        .dot.inactive {
-            background: rgb(107 114 128);
-        }
-        
-        .dot.inactive:hover {
-            background: rgb(156 163 175);
-            transform: scale(1.1);
-        }
-        
-        .progress-bar {
-            height: 0.25rem;
-            background: rgb(75 85 99);
-            border-radius: 9999px;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
-        
-        .progress-fill {
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px; 
             height: 100%;
-            background: linear-gradient(to right, rgb(59 130 246), rgb(168 85 247), rgb(236 72 153));
-            transition: width 0.5s ease-out;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+        
+        /* Op mobiel staat de lijn links */
+        @media (max-width: 768px) {
+            .timeline-line { left: 24px; } 
+        }
+        
+        /* Hover card effect */
+        .timeline-card {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .timeline-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.15);
+            border-color: #4f46e5;
+        }
+
+        /* Bar chart animatie */
+        .bar-growth { animation: growUp 1s ease-out forwards; transform-origin: bottom; transform: scaleY(0); }
+        @keyframes growUp { to { transform: scaleY(1); } }
+
+        /* Modal styling */
+        .modal-open { overflow: hidden; }
+
+        /* Hide scrollbar for horizontal scroll area but keep functionality */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
-<body>
-    <div style="height: 100vh; width: 100%; background: linear-gradient(to bottom right, rgb(55 65 81), rgb(75 85 99), rgb(55 65 81)); display: flex; flex-direction: column; overflow: hidden;">
-        
-        <!-- Main Content Area -->
-        <div id="main-content" style="flex: 1; position: relative; overflow: hidden;">
-            <!-- Slides Container -->
-            <div id="slides-container" class="slide-container">
-                <!-- Slide 1 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(96 165 250), rgb(37 99 235));">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-                        </div>
-                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Bart Portfolio</h1>
-                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Docent LO & Bewegingswetenschappen</h2>
-                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(96 165 250), rgb(37 99 235));"></div>
-                        <p style="font-size: 1.25rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; max-width: 42rem; margin: 0 auto;">17 jaar ervaring in onderwijs en innovatie</p>
-                        <div style="margin-top: 2rem; text-align: center;">
-                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">01 / 06</span>
-                        </div>
-                    </div>
-                </div>
+<body class="bg-gray-50 text-gray-800 text-sm">
 
-                <!-- Slide 2 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(192 132 252), rgb(147 51 234));">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                        </div>
-                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">ICT & Innovatie</h1>
-                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Technologische Ontwikkelingen</h2>
-                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(192 132 252), rgb(147 51 234));"></div>
-                        <p style="font-size: 1.25rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; max-width: 42rem; margin: 0 auto;">Google Apps Script • Web Development • AI Integratie • Studiewijzer Systemen</p>
-                        <div style="margin-top: 2rem; text-align: center;">
-                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">02 / 06</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(134 239 172), rgb(22 163 74));">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-                        </div>
-                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Expertise</h1>
-                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Kerncompetenties</h2>
-                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(134 239 172), rgb(22 163 74));"></div>
-                        <p style="font-size: 1.25rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; max-width: 42rem; margin: 0 auto;">ICT Coördinator • Privacy Officer • Webmaster • Google Workspace Expert</p>
-                        <div style="margin-top: 2rem; text-align: center;">
-                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">03 / 06</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 4 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(251 146 60), rgb(234 88 12));">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                        </div>
-                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Projecten</h1>
-                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Digitale Leermiddelen</h2>
-                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(251 146 60), rgb(234 88 12));"></div>
-                        <p style="font-size: 1.25rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; max-width: 42rem; margin: 0 auto;">Video Analyse Tools • Workout Timers • Sport Delay Systemen • Studiewijzer Apps</p>
-                        <div style="margin-top: 2rem; text-align: center;">
-                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">04 / 06</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 5 -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(244 114 182), rgb(236 72 153));">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                        </div>
-                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Team & Begeleiding</h1>
-                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Samenwerking & Ontwikkeling</h2>
-                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(244 114 182), rgb(236 72 153));"></div>
-                        <p style="font-size: 1.25rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; max-width: 42rem; margin: 0 auto;">Collegiale Consultatie • Mentorschap • Professionele Ontwikkeling</p>
-                        <div style="margin-top: 2rem; text-align: center;">
-                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">05 / 07</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 6 - Sollicitatiebrief -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(251 191 36), rgb(245 158 11));">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
-                        </div>
-                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Sollicitatiebrief</h1>
-                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Docent LD - Dalton College</h2>
-                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(251 191 36), rgb(245 158 11));"></div>
-                        
-                        <div style="max-width: 32rem; margin: 0 auto;">
-                            <p style="font-size: 1.125rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; margin-bottom: 3rem;">
-                                Mijn sollicitatie voor de functie van docent LD, gebaseerd op 17 jaar ervaring en bewezen leiderschap.
-                            </p>
-                            
-                            <button onclick="openLetter()"
-                               style="display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; width: 100%; padding: 1.5rem 2rem; background: linear-gradient(to right, rgb(251 191 36), rgb(245 158 11)); color: white; font-size: 1.25rem; font-weight: 600; border-radius: 1rem; text-decoration: none; transition: all 0.3s; box-shadow: 0 10px 25px -5px rgba(251, 191, 36, 0.5); border: none; cursor: pointer;"
-                               onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 20px 35px -5px rgba(251, 191, 36, 0.6)';"
-                               onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 25px -5px rgba(251, 191, 36, 0.5)';">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                                Lees Sollicitatiebrief
-                            </button>
-                            
-                            <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 0.75rem;">
-                                <p style="font-size: 0.875rem; color: rgb(209 213 219); text-align: center; margin: 0;">
-                                    📄 Formele sollicitatiebrief t.a.v. de Benoemingsadviescommissie
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-top: 2rem; text-align: center;">
-                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">06 / 07</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 7 - Google Drive -->
-                <div class="slide">
-                    <div class="card">
-                        <div class="icon-box" style="background: linear-gradient(to bottom right, rgb(103 232 249), rgb(8 145 178));">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
-                        </div>
-                        <h1 style="font-size: 3rem; font-weight: bold; color: white; text-align: center; margin-bottom: 0.75rem; letter-spacing: -0.025em;">Mijn Bestanden</h1>
-                        <h2 style="font-size: 1.5rem; color: rgb(209 213 219); text-align: center; margin-bottom: 2rem; font-weight: 300;">Portfolio Documenten</h2>
-                        <div style="height: 0.25rem; width: 6rem; margin: 0 auto 2rem; border-radius: 9999px; background: linear-gradient(to right, rgb(103 232 249), rgb(8 145 178));"></div>
-                        
-                        <div id="drive-content" style="max-width: 48rem; margin: 0 auto;">
-                            <!-- Initial Button State -->
-                            <div id="drive-button-container">
-                                <p style="font-size: 1.125rem; color: rgb(229 231 235); text-align: center; line-height: 1.75; margin-bottom: 3rem;">
-                                    Bekijk alle portfolio documenten, projecten, certificaten en leermaterialen in mijn Google Drive folder.
-                                </p>
-                                
-                                <button onclick="loadDriveIframe()"
-                                   style="display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; width: 100%; padding: 1.5rem 2rem; background: linear-gradient(to right, rgb(59 130 246), rgb(147 51 234)); color: white; font-size: 1.25rem; font-weight: 600; border-radius: 1rem; text-decoration: none; transition: all 0.3s; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); border: none; cursor: pointer;"
-                                   onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 20px 35px -5px rgba(59, 130, 246, 0.6)';"
-                                   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 25px -5px rgba(59, 130, 246, 0.5)';">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
-                                    Bestanden Laden
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                                </button>
-                                
-                                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 0.75rem;">
-                                    <p style="font-size: 0.875rem; color: rgb(209 213 219); text-align: center; margin: 0;">
-                                        💡 De folder bevat alle documentatie, werkvoorbeelden en certificaten uit mijn loopbaan
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <!-- Iframe Container (hidden initially) -->
-                            <div id="drive-iframe-container" style="display: none;">
-                                <div style="background: rgb(17 24 39); border-radius: 1rem; padding: 1rem; border: 1px solid rgb(75 85 99); box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3); margin-bottom: 1rem;">
-                                    <iframe 
-                                        id="drive-iframe"
-                                        src=""
-                                        style="width: 100%; height: 500px; border-radius: 0.5rem; border: none;"
-                                    ></iframe>
-                                </div>
-                                
-                                <div style="display: flex; gap: 1rem; align-items: center;">
-                                    <button onclick="closeDriveIframe()"
-                                       style="flex: 1; padding: 0.75rem 1.5rem; background: rgb(75 85 99); color: white; font-size: 1rem; font-weight: 500; border-radius: 0.5rem; border: none; cursor: pointer; transition: all 0.3s;"
-                                       onmouseover="this.style.background='rgb(107 114 128)'"
-                                       onmouseout="this.style.background='rgb(75 85 99)'">
-                                        Sluiten
-                                    </button>
-                                    
-                                    <a href="https://drive.google.com/drive/folders/11EtEpNu74M3g1Gh5UmozeJWg6a7Kyjk-" 
-                                       target="_blank"
-                                       style="flex: 1; padding: 0.75rem 1.5rem; background: linear-gradient(to right, rgb(59 130 246), rgb(147 51 234)); color: white; font-size: 1rem; font-weight: 500; border-radius: 0.5rem; text-decoration: none; text-align: center; transition: all 0.3s; display: inline-block;"
-                                       onmouseover="this.style.opacity='0.9'"
-                                       onmouseout="this.style.opacity='1'">
-                                        Open in nieuw tabblad →
-                                    </a>
-                                </div>
-                                
-                                <p style="font-size: 0.875rem; color: rgb(156 163 175); text-align: center; margin-top: 1rem;">
-                                    Klik op een bestand om te openen
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-top: 2rem; text-align: center;">
-                            <span style="font-size: 0.875rem; font-weight: 500; color: rgb(156 163 175);">07 / 07</span>
-                        </div>
-                    </div>
-                </div>
+    <!-- Header -->
+    <header class="bg-indigo-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold">Mijn Loopbaan</h1>
+                <p class="text-indigo-200 text-xs">Docent • ICT Coördinator • Coach • Privacy Officer</p>
             </div>
-
-            <!-- Navigation Arrows -->
-            <button id="prev-btn" class="nav-button left hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(31 41 55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            </button>
-            <button id="next-btn" class="nav-button right">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(31 41 55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
-        </div>
-
-        <!-- Bottom Navigation Bar -->
-        <div style="background: rgba(31, 41, 55, 0.95); backdrop-filter: blur(12px); border-top: 1px solid rgb(75 85 99); padding: 1.5rem 2rem;">
-            <div id="dots-container" style="max-width: 64rem; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 1rem;">
-                <!-- Dots will be generated by JS -->
-            </div>
-            
-            <div style="max-width: 64rem; margin: 0 auto;">
-                <div class="progress-bar">
-                    <div id="progress-fill" class="progress-fill" style="width: 16.67%;"></div>
-                </div>
+            <div class="flex space-x-2 bg-indigo-800 p-1 rounded-lg">
+                <button onclick="switchView('chronological')" id="btn-chrono" class="px-3 py-1.5 rounded-md text-xs font-medium transition-all bg-white text-indigo-700 shadow">
+                    <i class="fas fa-stream mr-2"></i>Tijdlijn
+                </button>
+                <button onclick="switchView('categorical')" id="btn-cat" class="px-3 py-1.5 rounded-md text-xs font-medium transition-all text-indigo-200 hover:bg-indigo-600">
+                    <i class="fas fa-th-large mr-2"></i>Overzicht
+                </button>
             </div>
         </div>
+    </header>
 
-        <!-- Keyboard navigation hint -->
-        <div style="position: absolute; bottom: 6rem; right: 2rem; font-size: 0.875rem; color: rgb(156 163 175); opacity: 0.7;">
-            Gebruik ← → of swipe
-        </div>
-    </div>
+    <!-- Shortcut Bar (Aangepast: Wrapping ipv Scrollen) -->
+    <div class="bg-white border-b border-gray-200 shadow-sm sticky top-[68px] z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex flex-wrap gap-2 items-center">
+                
+                <!-- Section: Persoonlijk -->
+                <button onclick="openPdf('', 'Sollicitatiebrief')" 
+                        class="flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-full text-xs font-medium transition-colors border border-indigo-100 whitespace-nowrap">
+                    <i class="fas fa-envelope-open-text mr-1.5"></i>Brief
+                </button>
+                <button onclick="openPdf('', 'Zelfreflectie okt 2025')" 
+                        class="flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-full text-xs font-medium transition-colors border border-indigo-100 whitespace-nowrap">
+                    <i class="fas fa-mirror mr-1.5"></i>Reflectie
+                </button>
 
-    <!-- Letter Modal -->
-    <div id="letter-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000;">
-        <!-- Blurred Background -->
-        <div id="letter-backdrop" onclick="closeLetter()" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"></div>
-        
-        <!-- Letter Content -->
-        <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 2rem; overflow-y: auto;">
-            <div style="background: white; max-width: 50rem; width: 100%; border-radius: 1rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); position: relative; max-height: 90vh; overflow-y: auto;">
-                <!-- Close Button -->
-                <button onclick="closeLetter()" style="position: sticky; top: 1rem; right: 1rem; float: right; width: 3rem; height: 3rem; border-radius: 50%; background: rgb(239 68 68); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);"
-                        onmouseover="this.style.background='rgb(220 38 38)'; this.style.transform='scale(1.1)'"
-                        onmouseout="this.style.background='rgb(239 68 68)'; this.style.transform='scale(1)'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                <!-- Divider (Zichtbaar op desktop, verborgen als het wrapt op mobiel door flow, maar handig voor visuele scheiding) -->
+                <div class="hidden md:block w-px h-6 bg-gray-300 mx-1"></div>
+
+                <!-- Section: Documenten Reeks -->
+                <button onclick="openPdf('', '1. Voortgangsgesprek 21-22')" 
+                        class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
+                    <i class="fas fa-file-pdf mr-1.5 text-red-500"></i>1. Voortgang '21-'22
+                </button>
+
+                <button onclick="openPdf('', '2. Lesobservatie 2022-2023')" 
+                        class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
+                    <i class="fas fa-file-pdf mr-1.5 text-red-500"></i>2. Obs '22-'23
+                </button>
+
+                <button onclick="openPdf('', '3. Lesobservatie 2023-2024')" 
+                        class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
+                    <i class="fas fa-file-pdf mr-1.5 text-red-500"></i>3. Obs '23-'24
+                </button>
+
+                <button onclick="openPdf('', '4. Lesobservatie 2024-2025')" 
+                        class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
+                    <i class="fas fa-file-pdf mr-1.5 text-red-500"></i>4. Obs '24-'25
+                </button>
+
+                <button onclick="openPdf('', '5. Enquête leerlingen')" 
+                        class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
+                    <i class="fas fa-poll mr-1.5 text-red-500"></i>5. Enquête
                 </button>
                 
-                <!-- Letter Content -->
-                <div style="padding: 3rem; color: rgb(31 41 55); line-height: 1.8;">
-                    <div style="margin-bottom: 2rem;">
-                        <p style="margin: 0.25rem 0;">Bart Hakkenberg</p>
-                        <p style="margin: 0.25rem 0;">Violethof 33</p>
-                        <p style="margin: 0.25rem 0;">2272 JP Voorburg</p>
-                        <p style="margin: 0.25rem 0;">0622316125</p>
-                        <p style="margin: 0.25rem 0;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="09616862496d68657d66677f66667b6b7c7b6e276765">[email&#160;protected]</a></p>
+                <button onclick="openPdf('', '6. Portfolio Dalton')" 
+                        class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
+                    <i class="fas fa-book mr-1.5 text-red-500"></i>6. Portfolio Dalton
+                </button>
+
+                <button onclick="openPdf('', '7. Stage Directie')" 
+                        class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
+                    <i class="fas fa-briefcase mr-1.5 text-red-500"></i>7. Stage Directie
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6 min-h-screen">
+        
+        <!-- Chronological View -->
+        <div id="chronological-view" class="fade-in block">
+            <div class="relative">
+                <div class="timeline-line"></div>
+                <div id="timeline-container" class="space-y-6 md:space-y-0"> 
+                    <!-- Items inserted by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Categorical View -->
+        <div id="categorical-view" class="hidden fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                <!-- Card: Huidige Status -->
+                <div class="bg-white p-5 rounded-lg shadow-sm border-t-4 border-indigo-500 col-span-1 md:col-span-2 lg:col-span-3 hover:shadow-md transition-shadow">
+                    <h2 class="text-lg font-bold mb-3 flex items-center"><i class="fas fa-id-card text-indigo-600 mr-3"></i>Huidig Profiel (2025-Heden)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-indigo-50 p-3 rounded-lg">
+                            <p class="text-xs text-gray-500">Functieomvang</p>
+                            <p class="text-xl font-bold text-indigo-700">0.95 FTE</p>
+                        </div>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <p class="text-xs text-gray-500">Schaal</p>
+                            <p class="text-xl font-bold text-blue-700">LC</p>
+                        </div>
+                        <div class="bg-emerald-50 p-3 rounded-lg">
+                            <p class="text-xs text-gray-500">Kernrollen</p>
+                            <p class="font-semibold text-emerald-700 text-sm">ICT Coördinator, Privacy Officer, Webmaster</p>
+                        </div>
                     </div>
-                    
-                    <div style="margin-bottom: 2rem;">
-                        <p style="margin: 0.25rem 0;">Dalton College</p>
-                        <p style="margin: 0.25rem 0;">T.a.v. B.A.C.</p>
-                        <p style="margin: 0.25rem 0;">Loolaan 125</p>
-                        <p style="margin: 0.25rem 0;">2271 TM Voorburg</p>
-                    </div>
-                    
-                    <p style="margin-bottom: 2rem;">Voorburg, [Datum van verzending]</p>
-                    
-                    <p style="font-weight: 600; margin-bottom: 2rem;">Betreft: Sollicitatie docent Ld</p>
-                    
-                    <p style="margin-bottom: 1.5rem;">Geachte benoemings advies commissie,</p>
-                    
-                    <p style="margin-bottom: 1.5rem;">Ik schrijf u deze brief omdat ik solliciteer naar de functie van docent Ld. Na 17 jaar ervaring als docent, waarvan de laatste 14 jaar in schaal LC, geloof ik dat de tijd rijp is om de volgende stap te zetten. Naar aanleiding van de gesprekken die ik de afgelopen jaren met de directie heb gevoerd over mijn loopbaanontwikkeling, is mij meermalen voorgehouden dat ik in aanmerking zou komen voor een LD-functie wanneer er financiële ruimte zou zijn. Nu het nieuwe promotiebeleid van het Dalton College die ruimte creërt, zie ik het als een uitgelezen kans om deze stap nu daadwerkelijk te maken.</p>
-                    
-                    <p style="margin-bottom: 1.5rem;">Ik heb in de afgelopen jaren niet stilgezeten. Naast het doceren heb ik mij ontpopt als een belangrijke schakel in de verdere professionalisering van onze school. In mijn ogen werk ik al jaren op het niveau van een LD'er, zowel in mijn aanpak als in mijn verantwoordelijkheden.</p>
-                    
-                    <p style="margin-bottom: 1rem;">Ik ben ervan overtuigd dat mijn leiderschap en leiderschapsstijl onmisbaar zijn voor de school. In het kort ben ik:</p>
-                    
-                    <ul style="margin-bottom: 1.5rem; padding-left: 2rem;">
-                        <li style="margin-bottom: 0.5rem;">een voorloper en aanjager in het onderwijs.</li>
-                        <li style="margin-bottom: 0.5rem;">iemand met diepgaande en actuele kennis, binnen de vakken lichamelijke opvoeding, bewegen sport en maatschappij, en de taken in mijn ICT- en privacy portefeuille.</li>
-                        <li style="margin-bottom: 0.5rem;">en ik heb een coachende en begeleidende rol in het team van klas 1 en ben ook teamcoach geweest van een PLG in klas 1.</li>
+                </div>
+
+                <!-- Card: Rollen & Taken -->
+                <div class="bg-white p-5 rounded-lg shadow-sm h-full hover:shadow-md transition-shadow">
+                    <h2 class="text-lg font-bold mb-3 flex items-center text-gray-800 border-b pb-2">
+                        <i class="fas fa-tasks text-orange-500 mr-3"></i>Rollen & Taken
+                    </h2>
+                    <ul class="space-y-3 text-xs">
+                        <li class="flex items-start">
+                            <div class="bg-orange-100 p-1 rounded mr-2 mt-0.5"><i class="fas fa-user-tie text-orange-600"></i></div>
+                            <div>
+                                <strong class="block text-gray-700">Management</strong>
+                                <span class="text-gray-500">ICT Portefeuille, AVG Privacy Officer, Teamcoach</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-blue-100 p-1 rounded mr-2 mt-0.5"><i class="fas fa-laptop-code text-blue-600"></i></div>
+                            <div>
+                                <strong class="block text-gray-700">ICT & Tech</strong>
+                                <span class="text-gray-500">I-Coach, ICT Coördinator, Webmaster</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-green-100 p-1 rounded mr-2 mt-0.5"><i class="fas fa-hands-helping text-green-600"></i></div>
+                            <div>
+                                <strong class="block text-gray-700">Begeleiding</strong>
+                                <span class="text-gray-500">Mentoraat, Coach, ASR aanspreekpunt</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-purple-100 p-1 rounded mr-2 mt-0.5"><i class="fas fa-project-diagram text-purple-600"></i></div>
+                            <div>
+                                <strong class="block text-gray-700">Projecten</strong>
+                                <span class="text-gray-500">Scorpio, Projectweek klas 1, Masterclasses</span>
+                            </div>
+                        </li>
                     </ul>
+                </div>
+
+                <!-- Card: Interesses & Skills -->
+                <div class="bg-white p-5 rounded-lg shadow-sm h-full md:col-span-2 lg:col-span-1 hover:shadow-md transition-shadow overflow-hidden">
+                    <h2 class="text-lg font-bold mb-3 flex items-center text-gray-800 border-b pb-2">
+                        <i class="fas fa-fingerprint text-pink-500 mr-3"></i>Interesses & Skills
+                    </h2>
+                    <div class="space-y-4 text-xs">
+                        
+                        <!-- AI & Tech -->
+                        <div>
+                            <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fas fa-robot text-indigo-500 mr-1.5 w-4"></i>Taalmodellen & Tech</h3>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded">ChatGPT</span>
+                                <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded">Claude AI</span>
+                                <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded">Gemini</span>
+                                <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded">NotebookLM</span>
+                                <span class="px-2 py-1 bg-indigo-50 text-indigo-600 border border-indigo-100 rounded">Vibecoding</span>
+                            </div>
+                        </div>
+
+                        <!-- Google Workspace -->
+                        <div>
+                            <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fab fa-google text-blue-500 mr-1.5 w-4"></i>Google Workspace (Expert)</h3>
+                            <p class="text-gray-500 leading-tight">Drive, Office, Formulieren, Websites, Appscript, Classroom.</p>
+                        </div>
+
+                        <!-- Websites & Media -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fas fa-globe text-cyan-500 mr-1.5 w-4"></i>Websites</h3>
+                                <p class="text-gray-500 leading-tight">Ontwerp (o.a. waterkamp, schaatsploeg).</p>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fas fa-microphone text-red-500 mr-1.5 w-4"></i>Podcast</h3>
+                                <p class="text-gray-500 leading-tight">Gevorderd niveau maken & luisteren.</p>
+                            </div>
+                        </div>
+
+                        <!-- Lifestyle & Finance -->
+                        <div class="pt-2 border-t border-dashed border-gray-200">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="flex items-center bg-green-50 text-green-700 px-2 py-1 rounded border border-green-100">
+                                    <i class="fas fa-leaf mr-1"></i> Voeding & Gezondheid (OER-sterk)
+                                </span>
+                                <span class="flex items-center bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100">
+                                    <i class="fas fa-coffee mr-1"></i> Barista (Latte Art)
+                                </span>
+                                <span class="flex items-center bg-gray-50 text-gray-700 px-2 py-1 rounded border border-gray-200">
+                                    <i class="fas fa-chart-line mr-1"></i> Tech. Analyse & Crypto
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card: Scholing -->
+                <div class="bg-white p-5 rounded-lg shadow-sm h-full hover:shadow-md transition-shadow">
+                    <h2 class="text-lg font-bold mb-3 flex items-center text-gray-800 border-b pb-2">
+                        <i class="fas fa-graduation-cap text-blue-500 mr-3"></i>Ontwikkeling
+                    </h2>
+                    <div class="space-y-3" id="courses-list">
+                        <!-- JS Injected -->
+                    </div>
+                    <div class="mt-4 p-3 bg-yellow-50 rounded text-xs text-yellow-800 italic">
+                        <i class="fas fa-book-reader mr-1"></i> "Slurpt kennis op het gebied van tech, media, productiviteit, persoonlijk leiderschap, omdenken en spiritualiteit."
+                    </div>
+                </div>
+
+                <!-- Card: Ervaring (Grafiek FTE) -->
+                <div class="bg-white p-5 rounded-lg shadow-sm h-full md:col-span-2 lg:col-span-2 hover:shadow-md transition-shadow">
+                    <h2 class="text-lg font-bold mb-3 flex items-center text-gray-800 border-b pb-2">
+                        <i class="fas fa-chart-area text-purple-500 mr-3"></i>Loopbaan Groei (FTE)
+                    </h2>
+                    <div class="h-48 w-full flex items-end justify-between px-2 pb-2 border-b border-l border-gray-200 relative" id="fte-chart">
+                        <!-- Bars inserted via JS -->
+                        
+                        <!-- Y-axis labels (simplified) -->
+                        <div class="absolute left-0 top-0 text-[10px] text-gray-400 -ml-6">1.0</div>
+                        <div class="absolute left-0 bottom-0 text-[10px] text-gray-400 -ml-6">0.0</div>
+                    </div>
+                    <div class="flex justify-between text-[10px] text-gray-400 mt-2 px-2">
+                        <span>2008</span>
+                        <span>2012</span>
+                        <span>2016</span>
+                        <span>2020</span>
+                        <span>2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-8 py-4 text-center text-gray-400 text-xs">
+        <p>&copy; 2025 Gegenereerd Portfolio Overzicht</p>
+    </footer>
+
+    <!-- PDF MODAL -->
+    <div id="pdf-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Background backdrop -->
+        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm" onclick="closePdf()"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                
+                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-5xl h-[85vh] flex flex-col">
                     
-                    <p style="margin-bottom: 1.5rem;">Ik zie het als mijn taak om innovaties te omarmen en mijn collega's te inspireren mee te gaan in de nieuwste ontwikkelingen. Op het gebied van ICT en AI heb ik me de afgelopen jaren ontwikkeld tot een expert. Ik geef wekelijks interne cursussen aan collega's over de toepassing van ICT in het onderwijs, van Magister tot Gemini. Om op de hoogte te blijven van de nieuwste ontwikkelingen, ga ik regelmatig naar bijeenkomsten voor IBP-beleid op het bestuursbureau of op andere scholen, en ik ben ambassadeur van ICT-applicaties. De wereld van nu ontwikkelt razendsnel. Daarom is actief onderzoek cruciaal. Wekelijks beluister ik meerdere toonaangevende podcasts over onderwijs en AI en ik ben geabonneerd op talloze nieuwsbrieven. Mijn opgedane kennis probeer ik zoveel mogelijk in de school te implementeren.</p>
+                    <!-- Modal Header -->
+                    <div class="bg-gray-50 px-4 py-3 flex justify-between items-center border-b border-gray-200">
+                        <h3 class="text-base font-semibold leading-6 text-gray-900 flex items-center" id="modal-title">
+                            <i class="fas fa-file-pdf text-red-500 mr-2"></i>
+                            <span id="modal-doc-title">Document</span>
+                        </h3>
+                        <button type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none" onclick="closePdf()">
+                            <span class="sr-only">Sluiten</span>
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+
+                    <!-- Modal Body (Iframe) -->
+                    <div class="flex-1 bg-gray-100 relative">
+                        <div id="loader" class="absolute inset-0 flex items-center justify-center text-indigo-600 hidden">
+                            <i class="fas fa-circle-notch fa-spin text-3xl"></i>
+                        </div>
+                        <!-- Placeholder Text if empty -->
+                        <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 hidden">
+                             <i class="fas fa-file-import text-5xl mb-4"></i>
+                             <p>Link volgt nog...</p>
+                        </div>
+                        <iframe id="pdf-frame" class="w-full h-full" src="" allow="autoplay"></iframe>
+                    </div>
                     
-                    <p style="margin-bottom: 1.5rem;">Mijn betrokkenheid reikt verder dan alleen ICT. Als docent BSM binnen de sectie Lichamelijke Opvoeding ben ik een aanjager en vernieuwer. Niet alleen op onze school. Zo ben ik nauw betrokken geweest bij de start van het vak BSM op het Maartens College. Zelf heb ik een duidelijke rol gespeeld bij de ontwikkeling van de nieuwe PTA's voor het VWO. Dit zijn voorbeelden van hoe ik mijn kennis deel en mijn nek uitsteek voor het vakgebied, zowel binnen als buiten onze school.</p>
-                    
-                    <p style="margin-bottom: 1.5rem;">Ik heb de opleidingen voor daltondocent en coach gevolgd, en deze kennis pas ik dagelijks toe. De originele studiecampus op onze school komt uit mijn idee. Ik verwijs graag naar mijn Dalton experimenten uit de Daltonopleiding. Het afgelopen jaar heb ik samen met Patrick de dynamische klasvergaderingen opgezet om in onze Daltonvisie een klas te bespreken, gericht op het kind.</p>
-                    
-                    <p style="margin-bottom: 1.5rem;">Ik ben ervan overtuigd dat mijn rol, zoals ik die de afgelopen jaren heb vervuld, past bij het profiel van een seniordocent LD. Met de opening van het nieuwe promotiebeleid wil ik de kans grijpen om de stap te maken en bij te dragen aan de verdere ontwikkeling van de school, als LD'er. Ik hoop dat ik ook nu, al is de promotie nog niet rond, als een LD'er word gezien, gewaardeerd en beoordeeld.</p>
-                    
-                    <p style="margin-bottom: 1.5rem;">Ik verwijs graag naar mijn dossier voor de overige documenten en mijn zelfevaluatie.</p>
-                    
-                    <p style="margin-bottom: 2rem;">Ik zie uw reactie graag tegemoet.</p>
-                    
-                    <p style="margin-bottom: 1rem;">Met vriendelijke groet,</p>
-                    
-                    <p style="margin-bottom: 3rem;">Bart Hakkenberg</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        let currentSlide = 0;
-        const totalSlides = 7;
-        const slidesContainer = document.getElementById('slides-container');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const progressFill = document.getElementById('progress-fill');
-        const dotsContainer = document.getElementById('dots-container');
+    <script>
+        // --- DATA ---
+        const data = [
+            { period: "2025 - Heden", tasks: ["Coach klas 1G", "ICT Coördinator", "Webmaster", "Privacy Officer"], teaching: { fte: "0.95", scale: "LC", classes: ["1A", "1G", "2GHA", "4VMLO", "4V BSM"] }, courses: ["Basistraining 2 AVG (2025-2026)"] },
+            { period: "2024 - 2025", tasks: ["Coach klas 1E", "ICT Coördinator", "ICT Portefeuille", "Privacy Officer", "Webmaster"], teaching: { fte: "1.0", scale: "LC", classes: ["1E", "1F", "3VM", "6V BSM"] }, courses: [] },
+            { period: "2023 - 2024", tasks: ["Coach klas 1G", "ICT Coördinator", "ICT Portefeuille", "Webmaster"], teaching: { fte: "1.0", scale: "LC", classes: ["1C", "1G", "6V", "5V BSM", "6V BSM"] }, courses: [] },
+            { period: "2022 - 2023", tasks: ["Coach klas 1A", "ICT Portefeuille", "Privacy Officer", "Webmaster"], teaching: { fte: "1.0", scale: "LC", classes: ["1A", "1D", "5V2", "4V BSM", "5V BSM"] }, courses: ["Basistraining 1 AVG", "Opleiding Technische Analyse"] },
+            { period: "2021 - 2022", tasks: ["Coach klas 1", "ICT Innovator", "Privacy Officer", "ICT Portefeuille"], teaching: { fte: "1.0", scale: "LC", classes: ["1F", "1A", "2HA2", "3H1", "4VM1", "5H2", "4V BSM", "6V BSM"] }, courses: ["Oersterk Leefstijl Opleiding Level 1"] },
+            { period: "2020 - 2021", tasks: ["Coach klas 1", "Teamcoach klas 1", "Onderwijscommissie"], teaching: { fte: "1.0", scale: "LC", classes: ["1C", "1F", "2HA1", "3H3", "3VM", "4H1", "5H", "5V BSM", "6V BSM"] }, courses: [] },
+            { period: "2019 - 2020", tasks: ["Coach klas 1", "Teamcoach klas 1", "Onderwijscommissie"], teaching: { fte: "1.0", scale: "LC", classes: ["1C", "1H", "2HA1", "5V", "5V BSM", "5H BSM", "6V"] }, courses: ["Certificaat Daltondocent", "Cursus Coaching", "Cursus Teamcoaching", "Ploegleider A-divisie"] },
+            { period: "2018 - 2019", tasks: ["Scorpio", "Projectweek", "Dalton bouwt voort", "Onderwijscommissie"], teaching: { fte: "1.09", scale: "LC", classes: ["1A", "1B", "2HA1", "2HA2", "2HA5", "4VM1", "5V3 (inval)", "4H BSM", "5H BSM"] }, courses: [] },
+            { period: "2017 - 2018", tasks: ["Scorpio", "Projectweek", "Dalton bouwt voort", "Onderwijscommissie"], teaching: { fte: "1.05", scale: "LC", classes: ["1B", "1E", "1H", "2VM1", "2HA1", "2HA2", "3H1", "4H BSM", "5H BSM", "5V3"] }, courses: ["Cursus Coöperatieve Leerstrategieën"] },
+            { period: "2016 - 2017", tasks: ["Scorpio", "Projectweek", "Onderwijscommissie"], teaching: { fte: "1.0", scale: "LC", classes: ["1E", "1C", "2G", "2VM2", "3H2", "3G", "4VM1", "4H BSM", "5H BSM", "6V1"] }, courses: [] },
+            { period: "2015 - 2016", tasks: ["Mentoraat 2e klas", "Scorpio", "Projectweek", "Onderwijscommissie"], teaching: { fte: "0.86", scale: "LC", classes: ["1A", "1H", "2HA3", "2VM2", "3H2", "3H4", "4H BSM", "5H BSM"] }, courses: [] },
+            { period: "2014 - 2015", tasks: ["Mentoraat klas 1", "Onderwijscommissie"], teaching: { fte: "0.73", scale: "LC", classes: ["1A", "1D", "2HA3", "5H2", "5V2", "4H BSM", "5H BSM"] }, courses: [] },
+            { period: "2013 - 2014", tasks: ["Mentoraat 1e klas", "Onderwijscommissie"], teaching: { fte: "0.7", scale: "LC", classes: ["1A", "1C", "3H2", "5H1", "4H BSM", "5H BSM", "LO2", "3VMBO"] }, courses: [] },
+            { period: "2012 - 2013", tasks: ["Mentoraat 1e klas", "Onderwijscommissie"], teaching: { fte: "0.79", scale: "LC", classes: ["1A", "1C", "4H1", "4H2", "4H3", "4H BSM", "5H BSM"] }, courses: [] },
+            { period: "2011 - 2012", tasks: ["Mentoraat 1e klas"], teaching: { fte: "0.83", scale: "LB", classes: ["1D", "3H2", "3V1", "4H BSM", "5H BSM"] }, courses: [] },
+            { period: "2010 - 2011", tasks: ["Mentoraat 1e klas"], teaching: { fte: "0.7", scale: "LB", classes: ["1D", "3H2", "3V2", "4H BSM", "5H BSM"] }, courses: ["Cursus Leefstijl Mentoraat Klas 1"] },
+            { period: "2009 - 2010", tasks: ["Docent LB"], teaching: { fte: "0.3", scale: "LB", classes: ["1B", "3H2", "3V2", "4H BSM", "3VMBO"] }, courses: [] },
+            { period: "2008 - 2009", tasks: ["Docent LB"], teaching: { fte: "0.2", scale: "LB", classes: ["1B", "3H2"] }, courses: [] }
+        ];
 
-        // Letter modal functions
-        function openLetter() {
-            const modal = document.getElementById('letter-modal');
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeLetter() {
-            const modal = document.getElementById('letter-modal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+        const allCourses = [
+             {year: "2025", name: "Basistraining 2 AVG"},
+             {year: "2023", name: "Basistraining 1 AVG"},
+             {year: "2023", name: "Opleiding Technische analyse"},
+             {year: "2022", name: "Oersterk leefstijl opleiding"},
+             {year: "2020", name: "Certificaat Daltondocent"},
+             {year: "2020", name: "Cursus coaching (docenten)"},
+             {year: "2020", name: "Cursus teamcoaching"},
+             {year: "2020", name: "Ploegleider A-divisie"},
+             {year: "2018", name: "Coöperatieve leerstrategieën"},
+             {year: "2010", name: "Leefstijl mentoraat klas 1"}
+        ];
 
-        // Google Drive iframe functions
-        function loadDriveIframe() {
-            const buttonContainer = document.getElementById('drive-button-container');
-            const iframeContainer = document.getElementById('drive-iframe-container');
-            const iframe = document.getElementById('drive-iframe');
-            
-            // Hide button, show iframe
-            buttonContainer.style.display = 'none';
-            iframeContainer.style.display = 'block';
-            
-            // Load iframe source
-            iframe.src = 'https://drive.google.com/embeddedfolderview?id=11EtEpNu74M3g1Gh5UmozeJWg6a7Kyjk-#grid';
-        }
-        
-        function closeDriveIframe() {
-            const buttonContainer = document.getElementById('drive-button-container');
-            const iframeContainer = document.getElementById('drive-iframe-container');
-            const iframe = document.getElementById('drive-iframe');
-            
-            // Show button, hide iframe
-            buttonContainer.style.display = 'block';
-            iframeContainer.style.display = 'none';
-            
-            // Clear iframe source to stop loading
-            iframe.src = '';
-        }
+        // --- MODAL FUNCTIONS ---
+        function openPdf(url, title) {
+            const modal = document.getElementById('pdf-modal');
+            const frame = document.getElementById('pdf-frame');
+            const titleEl = document.getElementById('modal-doc-title');
+            const loader = document.getElementById('loader');
+            const emptyState = document.getElementById('empty-state');
 
-        // Generate dots
-        for (let i = 0; i < totalSlides; i++) {
-            const dot = document.createElement('div');
-            dot.className = i === 0 ? 'dot active' : 'dot inactive';
-            dot.onclick = () => navigateToSlide(i);
-            dotsContainer.appendChild(dot);
-        }
+            titleEl.textContent = title;
+            
+            modal.classList.remove('hidden');
+            document.body.classList.add('modal-open');
 
-        function updateUI() {
-            // Update slides position
-            slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
-            // Update buttons
-            prevBtn.classList.toggle('hidden', currentSlide === 0);
-            nextBtn.classList.toggle('hidden', currentSlide === totalSlides - 1);
-            
-            // Update dots
-            const dots = dotsContainer.children;
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = i === currentSlide ? 'dot active' : 'dot inactive';
-            }
-            
-            // Update progress bar
-            progressFill.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
-        }
-
-        function navigateToSlide(index) {
-            if (index >= 0 && index < totalSlides) {
-                currentSlide = index;
-                updateUI();
+            if (url) {
+                // Show Loader
+                loader.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+                frame.classList.remove('hidden');
+                frame.src = url;
+            } else {
+                // Show Empty State
+                loader.classList.add('hidden');
+                frame.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                frame.src = '';
             }
         }
 
-        prevBtn.onclick = () => navigateToSlide(currentSlide - 1);
-        nextBtn.onclick = () => navigateToSlide(currentSlide + 1);
+        function hideLoader() {
+            document.getElementById('loader').classList.add('hidden');
+        }
 
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') navigateToSlide(currentSlide - 1);
-            if (e.key === 'ArrowRight') navigateToSlide(currentSlide + 1);
-            if (e.key === 'Escape') closeLetter();
+        function closePdf() {
+            const modal = document.getElementById('pdf-modal');
+            const frame = document.getElementById('pdf-frame');
+            
+            modal.classList.add('hidden');
+            document.body.classList.remove('modal-open');
+            
+            setTimeout(() => {
+                frame.src = '';
+            }, 200);
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closePdf();
+            }
         });
 
-        // Touch/swipe support
-        let touchStartX = 0;
-        let touchEndX = 0;
+        // --- RENDER FUNCTIONS ---
 
-        document.getElementById('main-content').addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
+        function renderTimeline() {
+            const container = document.getElementById('timeline-container');
+            container.innerHTML = '';
+
+            data.forEach((item, index) => {
+                const isLeft = index % 2 === 0; 
+                
+                const classesHtml = item.teaching.classes.map(cls => 
+                    `<span class="inline-block bg-gray-100 text-gray-600 text-[10px] px-1.5 py-0.5 rounded mr-1 mb-1 border border-gray-200">${cls}</span>`
+                ).join('');
+
+                const tasksHtml = item.tasks.map(task => 
+                    `<li class="flex items-center text-xs text-gray-600"><span class="w-1 h-1 bg-indigo-400 rounded-full mr-1.5"></span>${task}</li>`
+                ).join('');
+
+                const coursesHtml = item.courses.length > 0 ? 
+                    `<div class="mt-2 pt-1 border-t border-dashed border-gray-100">
+                        <p class="text-[10px] font-bold text-emerald-600 mb-0.5"><i class="fas fa-graduation-cap mr-1"></i>Scholing:</p>
+                        <ul class="text-[10px] text-gray-500 italic leading-tight">${item.courses.map(c => `<li>${c}</li>`).join('')}</ul>
+                    </div>` : '';
+
+                const cardClasses = `timeline-card bg-white p-4 rounded-lg shadow-sm border-indigo-500 relative ${isLeft ? 'border-r-4' : 'border-l-4'}`;
+                
+                const cardContent = `
+                    <div class="${cardClasses}">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-sm text-indigo-700">${item.period}</h3>
+                            <div class="flex space-x-1">
+                                <span class="bg-blue-50 text-blue-700 text-[10px] font-semibold px-1.5 py-0.5 rounded">${item.teaching.fte}</span>
+                                <span class="bg-purple-50 text-purple-700 text-[10px] font-semibold px-1.5 py-0.5 rounded">${item.teaching.scale}</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-0.5 mb-2">
+                            ${tasksHtml}
+                        </ul>
+                        <div class="mt-1">
+                            <div class="flex flex-wrap">
+                                ${classesHtml}
+                            </div>
+                        </div>
+                        ${coursesHtml}
+                    </div>
+                `;
+
+                const html = `
+                    <div class="flex flex-col md:flex-row items-center justify-between w-full mb-4 md:mb-0">
+                        <div class="w-full md:w-5/12 md:text-right pr-0 md:pr-8 pl-12 md:pl-0 order-2 md:order-1 relative">
+                            ${isLeft ? cardContent : ''}
+                        </div>
+                        <div class="absolute left-[24px] md:static md:w-2/12 flex justify-center order-1 md:order-2 z-10 h-full md:h-auto items-start md:items-center pt-4 md:pt-0">
+                             <div class="bg-indigo-600 shadow-md w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">
+                                ${(2025 - index).toString().slice(-2)}
+                            </div>
+                        </div>
+                        <div class="w-full md:w-5/12 md:text-left pl-0 md:pl-8 pl-12 md:pl-0 order-3 md:order-3 relative mt-2 md:mt-0">
+                             ${!isLeft ? cardContent : ''}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        function renderCourses() {
+            const container = document.getElementById('courses-list');
+            container.innerHTML = allCourses.map(course => `
+                <div class="flex items-center border-b border-gray-50 pb-2 last:border-0">
+                    <div class="bg-emerald-50 text-emerald-600 rounded p-1.5 mr-2">
+                        <i class="fas fa-certificate text-xs"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-700 text-xs">${course.name}</h4>
+                        <span class="text-[10px] text-gray-400">${course.year}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderChart() {
+            const container = document.getElementById('fte-chart');
+            const maxFte = 1.2;
+            const reversedData = [...data].reverse();
+            
+            reversedData.forEach((item, index) => {
+                const fte = parseFloat(item.teaching.fte.replace(',', '.'));
+                const heightPercent = (fte / maxFte) * 100;
+                let barColor = "bg-indigo-400";
+                if(item.teaching.scale === "LC") barColor = "bg-indigo-600";
+
+                const barHtml = `
+                    <div class="flex flex-col items-center justify-end h-full w-full group relative">
+                         <div class="opacity-0 group-hover:opacity-100 absolute bottom-full mb-1 bg-gray-800 text-white text-[10px] px-1 rounded pointer-events-none transition-opacity whitespace-nowrap z-10">
+                            ${item.period.split(' ')[0]}: ${fte} FTE
+                         </div>
+                         <div class="w-2 md:w-4 ${barColor} rounded-t bar-growth hover:bg-purple-500 transition-colors" style="height: ${heightPercent}%; animation-delay: ${index * 50}ms"></div>
+                    </div>
+                `;
+                container.innerHTML += barHtml;
+            });
+        }
+
+        function switchView(viewName) {
+            const chronoView = document.getElementById('chronological-view');
+            const catView = document.getElementById('categorical-view');
+            const btnChrono = document.getElementById('btn-chrono');
+            const btnCat = document.getElementById('btn-cat');
+
+            if (viewName === 'chronological') {
+                chronoView.classList.remove('hidden');
+                catView.classList.add('hidden');
+                
+                btnChrono.className = "px-3 py-1.5 rounded-md text-xs font-medium transition-all bg-white text-indigo-700 shadow";
+                btnCat.className = "px-3 py-1.5 rounded-md text-xs font-medium transition-all text-indigo-200 hover:bg-indigo-600";
+            } else {
+                chronoView.classList.add('hidden');
+                catView.classList.remove('hidden');
+
+                btnCat.className = "px-3 py-1.5 rounded-md text-xs font-medium transition-all bg-white text-indigo-700 shadow";
+                btnChrono.className = "px-3 py-1.5 rounded-md text-xs font-medium transition-all text-indigo-200 hover:bg-indigo-600";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const frame = document.getElementById('pdf-frame');
+            if (frame) {
+                frame.onload = hideLoader;
+            }
+            renderTimeline();
+            renderCourses();
+            renderChart();
         });
 
-        document.getElementById('main-content').addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (touchStartX - touch
+    </script>
+</body>
+</html>
