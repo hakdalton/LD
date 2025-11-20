@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loopbaan Portfolio | Onderwijs & ICT</title>
+    <title>Bart Hakkenberg | Onderwijs & ICT</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -15,14 +15,41 @@
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4338ca; }
+        ::-webkit-scrollbar-thumb { background: #009639; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #007a2e; }
+
+        /* PMS 355 Green Utilities (Donkergroen) */
+        .bg-pms-355 { background-color: #009639; }
+        .text-pms-355 { color: #009639; }
+        .border-pms-355 { border-color: #009639; }
+        .hover\:bg-pms-355:hover { background-color: #009639; }
+        .hover\:text-pms-355:hover { color: #009639; }
+        .hover\:border-pms-355:hover { border-color: #009639; }
+
+        /* PMS 301 Dark Blue Utilities */
+        .text-pms-301 { color: #00529B; }
+        .bg-pms-301 { background-color: #00529B; }
+        .border-pms-301 { border-color: #00529B; }
+        .hover\:text-pms-301:hover { color: #00529B; }
+        .hover\:border-pms-301:hover { border-color: #00529B; }
+
+        /* PMS 381 Light Green Utilities */
+        .text-pms-381 { color: #CEDC00; }
+        .bg-pms-381 { background-color: #CEDC00; }
+        .border-pms-381 { border-color: #CEDC00; }
+        .hover\:text-pms-381:hover { color: #CEDC00; }
+        .hover\:border-pms-381:hover { border-color: #CEDC00; }
+        /* Custom background for 381 buttons (very light version) */
+        .bg-pms-381-light { background-color: rgba(206, 220, 0, 0.1); }
+        .hover\:bg-pms-381-light:hover { background-color: rgba(206, 220, 0, 0.2); }
+        /* Darker text for readability on light bg, based on PMS 381 hue */
+        .text-pms-381-dark { color: #858f00; }
 
         .timeline-line {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            width: 2px; 
+            width: 3px; 
             height: 100%;
             background-color: #e5e7eb;
             z-index: 0;
@@ -39,8 +66,8 @@
         }
         .timeline-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.15);
-            border-color: #4f46e5;
+            box-shadow: 0 10px 20px -5px rgba(0, 150, 57, 0.15);
+            border-color: #009639;
         }
 
         /* Bar chart animatie */
@@ -58,78 +85,105 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+        
+        /* Active tab state */
+        .view-btn-active {
+            background-color: #009639;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .view-btn-inactive {
+            background-color: white;
+            color: #009639;
+            border: 2px solid #009639;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 text-sm">
 
-    <!-- Header -->
-    <header class="bg-indigo-700 text-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div>
-                <h1 class="text-xl font-bold">Mijn Loopbaan</h1>
-                <p class="text-indigo-200 text-xs">Docent • ICT Coördinator • Coach • Privacy Officer</p>
+    <!-- Header (Branding Only) -->
+    <header class="bg-pms-355 text-white shadow-md relative z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://daltonvoorburg.nl/wp-content/uploads/2022/12/header-logo-dalton.svg" alt="Dalton Voorburg" class="h-10 w-auto mr-3 bg-white p-1 rounded shadow-sm">
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight">Bart Hakkenberg</h1>
+                    <p class="text-green-100 text-sm opacity-90">Docent • ICT Coördinator • Coach • Privacy Officer</p>
+                </div>
             </div>
-            <div class="flex space-x-2 bg-indigo-800 p-1 rounded-lg">
-                <button onclick="switchView('chronological')" id="btn-chrono" class="px-3 py-1.5 rounded-md text-xs font-medium transition-all bg-white text-indigo-700 shadow">
-                    <i class="fas fa-stream mr-2"></i>Tijdlijn
-                </button>
-                <button onclick="switchView('categorical')" id="btn-cat" class="px-3 py-1.5 rounded-md text-xs font-medium transition-all text-indigo-200 hover:bg-indigo-600">
-                    <i class="fas fa-th-large mr-2"></i>Overzicht
-                </button>
+            <div class="hidden md:block text-right">
+               <span class="text-xs bg-green-800 px-2 py-1 rounded text-green-100"><i class="fas fa-calendar-alt mr-1"></i>2008 - Heden</span>
             </div>
         </div>
     </header>
 
-    <!-- Shortcut Bar (Aangepast: Wrapping ipv Scrollen) -->
-    <div class="bg-white border-b border-gray-200 shadow-sm sticky top-[68px] z-40">
+    <!-- Sticky Shortcut Bar -->
+    <div class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40 bg-opacity-95 backdrop-blur-sm">
         <div class="container mx-auto px-4 py-3">
-            <div class="flex flex-wrap gap-2 items-center">
+            <div class="flex flex-wrap gap-2 items-center justify-center md:justify-start">
                 
-                <!-- Section: Persoonlijk -->
-                <button onclick="openPdf('', 'Sollicitatiebrief')" 
-                        class="flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-full text-xs font-medium transition-colors border border-indigo-100 whitespace-nowrap">
+                <!-- Section: Persoonlijk (PMS 301 - Blauw) -->
+                <button onclick="openPdf('https://drive.google.com/file/d/153IagI8D_fCNLWW_idAgS6SChpFjMFRv/preview', 'Sollicitatiebrief')" 
+                        class="flex items-center px-3 py-1.5 bg-blue-50 text-pms-301 hover:bg-blue-100 rounded-full text-xs font-medium transition-colors border border-blue-100 whitespace-nowrap">
                     <i class="fas fa-envelope-open-text mr-1.5"></i>Brief
                 </button>
                 <button onclick="openPdf('', 'Zelfreflectie okt 2025')" 
-                        class="flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-full text-xs font-medium transition-colors border border-indigo-100 whitespace-nowrap">
+                        class="flex items-center px-3 py-1.5 bg-blue-50 text-pms-301 hover:bg-blue-100 rounded-full text-xs font-medium transition-colors border border-blue-100 whitespace-nowrap">
                     <i class="fas fa-mirror mr-1.5"></i>Reflectie
                 </button>
-
-                <!-- Divider (Zichtbaar op desktop, verborgen als het wrapt op mobiel door flow, maar handig voor visuele scheiding) -->
+                
+                <!-- Divider -->
                 <div class="hidden md:block w-px h-6 bg-gray-300 mx-1"></div>
 
-                <!-- Section: Documenten Reeks -->
-                <button onclick="openPdf('', '1. Voortgangsgesprek 21-22')" 
+                <!-- Section: Interactief / Criteria (PMS 381 - Lichtgroen) -->
+                <button onclick="openHtml('ld_criteria', 'Gedragscriteria Docent LD')" 
+                        class="flex items-center px-3 py-1.5 bg-pms-381-light text-pms-381-dark hover:bg-pms-381-light hover:text-pms-381-dark rounded-full text-xs font-medium transition-colors border border-pms-381 whitespace-nowrap">
+                    <i class="fas fa-clipboard-check mr-1.5 text-pms-381"></i>Gedragscriteria LD
+                </button>
+
+                <!-- Feedback Docenten Button -->
+                <button onclick="openHtml('feedback_collegas', 'Feedback Docenten')" 
+                        class="flex items-center px-3 py-1.5 bg-pms-381-light text-pms-381-dark hover:bg-pms-381-light hover:text-pms-381-dark rounded-full text-xs font-medium transition-colors border border-pms-381 whitespace-nowrap">
+                    <i class="fas fa-comments mr-1.5 text-pms-381"></i>Feedback Docenten
+                </button>
+
+                <!-- Feedback Leerlingen Button -->
+                <button onclick="openHtml('feedback_leerlingen', 'Feedback Leerlingen')" 
+                        class="flex items-center px-3 py-1.5 bg-pms-381-light text-pms-381-dark hover:bg-pms-381-light hover:text-pms-381-dark rounded-full text-xs font-medium transition-colors border border-pms-381 whitespace-nowrap">
+                    <i class="fas fa-poll mr-1.5 text-pms-381"></i>5. Feedback Leerlingen
+                </button>
+
+                <!-- Divider -->
+                <div class="hidden md:block w-px h-6 bg-gray-300 mx-1"></div>
+
+                <!-- Section: Documenten Reeks (Rood) -->
+                <button onclick="openPdf('https://drive.google.com/file/d/1ojMjflhi55kX16Rgv0AI9uvULmQTSEa2/preview', '1. Voortgangsgesprek 21-22')" 
                         class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
                     <i class="fas fa-file-pdf mr-1.5 text-red-500"></i>1. Voortgang '21-'22
                 </button>
 
-                <button onclick="openPdf('', '2. Lesobservatie 2022-2023')" 
+                <button onclick="openPdf('https://drive.google.com/file/d/1xXMpUBu8NPtIksMOmCiYZ9jR2jp17GZC/preview', '2. Lesobservatie 2022-2023')" 
                         class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
                     <i class="fas fa-file-pdf mr-1.5 text-red-500"></i>2. Obs '22-'23
                 </button>
 
-                <button onclick="openPdf('', '3. Lesobservatie 2023-2024')" 
+                <button onclick="openPdf('https://drive.google.com/file/d/1Qyvd2214OUU8g0pbxngQwAwWTeJOOXJq/preview', '3. Lesobservatie 2023-2024')" 
                         class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
                     <i class="fas fa-file-pdf mr-1.5 text-red-500"></i>3. Obs '23-'24
                 </button>
 
-                <button onclick="openPdf('', '4. Lesobservatie 2024-2025')" 
+                <button onclick="openPdf('https://drive.google.com/file/d/1mGvN5QbzeZff6_ZgW96VGVd7FXzrzAV7/preview', '4. Lesobservatie 2024-2025')" 
                         class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
                     <i class="fas fa-file-pdf mr-1.5 text-red-500"></i>4. Obs '24-'25
                 </button>
-
-                <button onclick="openPdf('', '5. Enquête leerlingen')" 
-                        class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
-                    <i class="fas fa-poll mr-1.5 text-red-500"></i>5. Enquête
-                </button>
                 
-                <button onclick="openPdf('', '6. Portfolio Dalton')" 
+                <button onclick="openPdf('https://drive.google.com/file/d/1H4-TZ8qElV_cSYxS8je8T1Ye1inrCOoC/preview', '6. Daltonopleiding')" 
                         class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
-                    <i class="fas fa-book mr-1.5 text-red-500"></i>6. Portfolio Dalton
+                    <i class="fas fa-book mr-1.5 text-red-500"></i>6. Daltonopleiding
                 </button>
 
-                <button onclick="openPdf('', '7. Stage Directie')" 
+                <button onclick="openPdf('https://drive.google.com/file/d/1M31rntDPLyQz2JCJjLPnzAyD2YNS7RHH/preview', '7. Stage Directie')" 
                         class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-full text-xs transition-colors border border-red-100 whitespace-nowrap">
                     <i class="fas fa-briefcase mr-1.5 text-red-500"></i>7. Stage Directie
                 </button>
@@ -137,8 +191,36 @@
         </div>
     </div>
 
+    <!-- Hero / Landing Section -->
+    <section class="relative bg-gray-900 text-white py-20 md:py-32 overflow-hidden">
+        <!-- Achtergrond Afbeelding & Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="fotoschaats.png" 
+                 onerror="this.src='https://images.unsplash.com/photo-1532444458054-01a7dd3e9fca?q=80&w=2070&auto=format&fit=crop'"
+                 alt="Achtergrond Bart Hakkenberg" 
+                 class="w-full h-full object-cover opacity-50 blur-[3px]">
+            <!-- Extra donkere overlay voor betere leesbaarheid tekst -->
+            <div class="absolute inset-0 bg-black/50"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">Welkom bij mijn portfolio</h2>
+            <p class="text-gray-200 mb-10 text-base md:text-lg max-w-2xl mx-auto drop-shadow-md">Bekijk mijn professionele ontwikkeling in het onderwijs en ICT door de jaren heen.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="switchView('chronological')" id="btn-chrono" class="px-8 py-4 rounded-lg text-lg font-bold transition-all flex items-center justify-center view-btn-active shadow-xl hover:scale-105 transform">
+                    <i class="fas fa-stream mr-3"></i>Chronologische Tijdlijn
+                </button>
+                <button onclick="switchView('categorical')" id="btn-cat" class="px-8 py-4 rounded-lg text-lg font-bold transition-all flex items-center justify-center bg-white text-pms-355 hover:bg-green-50 shadow-xl hover:scale-105 transform">
+                    <i class="fas fa-th-large mr-3"></i>Categorisch Overzicht
+                </button>
+            </div>
+        </div>
+    </section>
+
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-6 min-h-screen">
+    <main class="container mx-auto px-4 py-10 min-h-screen">
         
         <!-- Chronological View -->
         <div id="chronological-view" class="fade-in block">
@@ -152,112 +234,104 @@
 
         <!-- Categorical View -->
         <div id="categorical-view" class="hidden fade-in">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
                 <!-- Card: Huidige Status -->
-                <div class="bg-white p-5 rounded-lg shadow-sm border-t-4 border-indigo-500 col-span-1 md:col-span-2 lg:col-span-3 hover:shadow-md transition-shadow">
-                    <h2 class="text-lg font-bold mb-3 flex items-center"><i class="fas fa-id-card text-indigo-600 mr-3"></i>Huidig Profiel (2025-Heden)</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-indigo-50 p-3 rounded-lg">
-                            <p class="text-xs text-gray-500">Functieomvang</p>
-                            <p class="text-xl font-bold text-indigo-700">0.95 FTE</p>
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-pms-355 col-span-1 md:col-span-2 lg:col-span-3 hover:shadow-md transition-shadow">
+                    <h2 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-id-card text-pms-355 mr-3"></i>Huidig Profiel (2025-Heden)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide">Functieomvang</p>
+                            <p class="text-3xl font-bold text-pms-355">0.95 FTE</p>
                         </div>
-                        <div class="bg-blue-50 p-3 rounded-lg">
-                            <p class="text-xs text-gray-500">Schaal</p>
-                            <p class="text-xl font-bold text-blue-700">LC</p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide">Schaal</p>
+                            <p class="text-3xl font-bold text-blue-700">LC</p>
                         </div>
-                        <div class="bg-emerald-50 p-3 rounded-lg">
-                            <p class="text-xs text-gray-500">Kernrollen</p>
-                            <p class="font-semibold text-emerald-700 text-sm">ICT Coördinator, Privacy Officer, Webmaster</p>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide">Kernrollen</p>
+                            <p class="font-semibold text-gray-800 mt-1">ICT Coördinator, Privacy Officer, Webmaster</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Card: Rollen & Taken -->
-                <div class="bg-white p-5 rounded-lg shadow-sm h-full hover:shadow-md transition-shadow">
-                    <h2 class="text-lg font-bold mb-3 flex items-center text-gray-800 border-b pb-2">
+                <div class="bg-white p-6 rounded-xl shadow-sm h-full hover:shadow-md transition-shadow border border-gray-100">
+                    <h2 class="text-lg font-bold mb-4 flex items-center text-gray-800 border-b pb-3">
                         <i class="fas fa-tasks text-orange-500 mr-3"></i>Rollen & Taken
                     </h2>
-                    <ul class="space-y-3 text-xs">
+                    <ul class="space-y-4 text-sm">
                         <li class="flex items-start">
-                            <div class="bg-orange-100 p-1 rounded mr-2 mt-0.5"><i class="fas fa-user-tie text-orange-600"></i></div>
+                            <div class="bg-orange-100 p-2 rounded-lg mr-3"><i class="fas fa-user-tie text-orange-600"></i></div>
                             <div>
-                                <strong class="block text-gray-700">Management</strong>
-                                <span class="text-gray-500">ICT Portefeuille, AVG Privacy Officer, Teamcoach</span>
+                                <strong class="block text-gray-800">Management</strong>
+                                <span class="text-gray-500 text-xs">ICT Portefeuille, AVG Privacy Officer, Teamcoach</span>
                             </div>
                         </li>
                         <li class="flex items-start">
-                            <div class="bg-blue-100 p-1 rounded mr-2 mt-0.5"><i class="fas fa-laptop-code text-blue-600"></i></div>
+                            <div class="bg-blue-100 p-2 rounded-lg mr-3"><i class="fas fa-laptop-code text-blue-600"></i></div>
                             <div>
-                                <strong class="block text-gray-700">ICT & Tech</strong>
-                                <span class="text-gray-500">I-Coach, ICT Coördinator, Webmaster</span>
+                                <strong class="block text-gray-800">ICT & Tech</strong>
+                                <span class="text-gray-500 text-xs">I-Coach, ICT Coördinator, Webmaster</span>
                             </div>
                         </li>
                         <li class="flex items-start">
-                            <div class="bg-green-100 p-1 rounded mr-2 mt-0.5"><i class="fas fa-hands-helping text-green-600"></i></div>
+                            <div class="bg-green-100 p-2 rounded-lg mr-3"><i class="fas fa-hands-helping text-green-600"></i></div>
                             <div>
-                                <strong class="block text-gray-700">Begeleiding</strong>
-                                <span class="text-gray-500">Mentoraat, Coach, ASR aanspreekpunt</span>
+                                <strong class="block text-gray-800">Begeleiding</strong>
+                                <span class="text-gray-500 text-xs">Mentoraat, Coach, ASR aanspreekpunt</span>
                             </div>
                         </li>
                         <li class="flex items-start">
-                            <div class="bg-purple-100 p-1 rounded mr-2 mt-0.5"><i class="fas fa-project-diagram text-purple-600"></i></div>
+                            <div class="bg-purple-100 p-2 rounded-lg mr-3"><i class="fas fa-project-diagram text-purple-600"></i></div>
                             <div>
-                                <strong class="block text-gray-700">Projecten</strong>
-                                <span class="text-gray-500">Scorpio, Projectweek klas 1, Masterclasses</span>
+                                <strong class="block text-gray-800">Projecten</strong>
+                                <span class="text-gray-500 text-xs">Scorpio, Projectweek klas 1, Masterclasses</span>
                             </div>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Card: Interesses & Skills -->
-                <div class="bg-white p-5 rounded-lg shadow-sm h-full md:col-span-2 lg:col-span-1 hover:shadow-md transition-shadow overflow-hidden">
-                    <h2 class="text-lg font-bold mb-3 flex items-center text-gray-800 border-b pb-2">
+                <div class="bg-white p-6 rounded-xl shadow-sm h-full md:col-span-2 lg:col-span-1 hover:shadow-md transition-shadow overflow-hidden border border-gray-100">
+                    <h2 class="text-lg font-bold mb-4 flex items-center text-gray-800 border-b pb-3">
                         <i class="fas fa-fingerprint text-pink-500 mr-3"></i>Interesses & Skills
                     </h2>
-                    <div class="space-y-4 text-xs">
-                        
-                        <!-- AI & Tech -->
+                    <div class="space-y-5 text-sm">
                         <div>
-                            <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fas fa-robot text-indigo-500 mr-1.5 w-4"></i>Taalmodellen & Tech</h3>
-                            <div class="flex flex-wrap gap-1">
-                                <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded">ChatGPT</span>
-                                <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded">Claude AI</span>
-                                <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded">Gemini</span>
-                                <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded">NotebookLM</span>
-                                <span class="px-2 py-1 bg-indigo-50 text-indigo-600 border border-indigo-100 rounded">Vibecoding</span>
+                            <h3 class="font-bold text-gray-700 mb-2 flex items-center"><i class="fas fa-robot text-pms-355 mr-2"></i>Taalmodellen & Tech</h3>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-md text-xs">ChatGPT</span>
+                                <span class="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-md text-xs">Claude AI</span>
+                                <span class="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-md text-xs">Gemini</span>
+                                <span class="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-md text-xs">NotebookLM</span>
+                                <span class="px-2.5 py-1 bg-green-50 text-pms-355 border border-green-100 rounded-md text-xs font-medium">Vibecoding</span>
                             </div>
                         </div>
-
-                        <!-- Google Workspace -->
                         <div>
-                            <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fab fa-google text-blue-500 mr-1.5 w-4"></i>Google Workspace (Expert)</h3>
-                            <p class="text-gray-500 leading-tight">Drive, Office, Formulieren, Websites, Appscript, Classroom.</p>
+                            <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fab fa-google text-blue-500 mr-2"></i>Google Workspace (Expert)</h3>
+                            <p class="text-gray-500 leading-tight text-xs">Drive, Office, Formulieren, Websites, Appscript, Classroom.</p>
                         </div>
-
-                        <!-- Websites & Media -->
-                        <div class="grid grid-cols-2 gap-2">
+                        <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fas fa-globe text-cyan-500 mr-1.5 w-4"></i>Websites</h3>
-                                <p class="text-gray-500 leading-tight">Ontwerp (o.a. waterkamp, schaatsploeg).</p>
+                                <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fas fa-globe text-cyan-500 mr-2"></i>Websites</h3>
+                                <p class="text-gray-500 leading-tight text-xs">Ontwerp (o.a. waterkamp, schaatsploeg).</p>
                             </div>
                             <div>
-                                <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fas fa-microphone text-red-500 mr-1.5 w-4"></i>Podcast</h3>
-                                <p class="text-gray-500 leading-tight">Gevorderd niveau maken & luisteren.</p>
+                                <h3 class="font-bold text-gray-700 mb-1 flex items-center"><i class="fas fa-microphone text-red-500 mr-2"></i>Podcast</h3>
+                                <p class="text-gray-500 leading-tight text-xs">Gevorderd niveau maken & luisteren.</p>
                             </div>
                         </div>
-
-                        <!-- Lifestyle & Finance -->
-                        <div class="pt-2 border-t border-dashed border-gray-200">
+                        <div class="pt-3 border-t border-dashed border-gray-200">
                             <div class="flex flex-wrap gap-2">
-                                <span class="flex items-center bg-green-50 text-green-700 px-2 py-1 rounded border border-green-100">
-                                    <i class="fas fa-leaf mr-1"></i> Voeding & Gezondheid (OER-sterk)
+                                <span class="flex items-center bg-green-50 text-green-800 px-2.5 py-1 rounded border border-green-100 text-xs">
+                                    <i class="fas fa-leaf mr-1.5"></i> Voeding & Gezondheid (OER-sterk)
                                 </span>
-                                <span class="flex items-center bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100">
-                                    <i class="fas fa-coffee mr-1"></i> Barista (Latte Art)
+                                <span class="flex items-center bg-amber-50 text-amber-800 px-2.5 py-1 rounded border border-amber-100 text-xs">
+                                    <i class="fas fa-coffee mr-1.5"></i> Barista (Latte Art)
                                 </span>
-                                <span class="flex items-center bg-gray-50 text-gray-700 px-2 py-1 rounded border border-gray-200">
-                                    <i class="fas fa-chart-line mr-1"></i> Tech. Analyse & Crypto
+                                <span class="flex items-center bg-gray-100 text-gray-700 px-2.5 py-1 rounded border border-gray-200 text-xs">
+                                    <i class="fas fa-chart-line mr-1.5"></i> Tech. Analyse & Crypto
                                 </span>
                             </div>
                         </div>
@@ -265,31 +339,29 @@
                 </div>
 
                 <!-- Card: Scholing -->
-                <div class="bg-white p-5 rounded-lg shadow-sm h-full hover:shadow-md transition-shadow">
-                    <h2 class="text-lg font-bold mb-3 flex items-center text-gray-800 border-b pb-2">
+                <div class="bg-white p-6 rounded-xl shadow-sm h-full hover:shadow-md transition-shadow border border-gray-100">
+                    <h2 class="text-lg font-bold mb-4 flex items-center text-gray-800 border-b pb-3">
                         <i class="fas fa-graduation-cap text-blue-500 mr-3"></i>Ontwikkeling
                     </h2>
                     <div class="space-y-3" id="courses-list">
                         <!-- JS Injected -->
                     </div>
-                    <div class="mt-4 p-3 bg-yellow-50 rounded text-xs text-yellow-800 italic">
-                        <i class="fas fa-book-reader mr-1"></i> "Slurpt kennis op het gebied van tech, media, productiviteit, persoonlijk leiderschap, omdenken en spiritualiteit."
+                    <div class="mt-6 p-4 bg-yellow-50 rounded-lg text-xs text-yellow-800 italic border border-yellow-100">
+                        <i class="fas fa-book-reader mr-2"></i> "Slurpt kennis op het gebied van tech, media, productiviteit, persoonlijk leiderschap, omdenken en spiritualiteit."
                     </div>
                 </div>
 
                 <!-- Card: Ervaring (Grafiek FTE) -->
-                <div class="bg-white p-5 rounded-lg shadow-sm h-full md:col-span-2 lg:col-span-2 hover:shadow-md transition-shadow">
-                    <h2 class="text-lg font-bold mb-3 flex items-center text-gray-800 border-b pb-2">
-                        <i class="fas fa-chart-area text-purple-500 mr-3"></i>Loopbaan Groei (FTE)
+                <div class="bg-white p-6 rounded-xl shadow-sm h-full md:col-span-2 lg:col-span-2 hover:shadow-md transition-shadow border border-gray-100">
+                    <h2 class="text-lg font-bold mb-4 flex items-center text-gray-800 border-b pb-3">
+                        <i class="fas fa-chart-area text-pms-355 mr-3"></i>Loopbaan Groei (FTE)
                     </h2>
-                    <div class="h-48 w-full flex items-end justify-between px-2 pb-2 border-b border-l border-gray-200 relative" id="fte-chart">
+                    <div class="h-56 w-full flex items-end justify-between px-4 pb-2 border-b border-l border-gray-200 relative" id="fte-chart">
                         <!-- Bars inserted via JS -->
-                        
-                        <!-- Y-axis labels (simplified) -->
-                        <div class="absolute left-0 top-0 text-[10px] text-gray-400 -ml-6">1.0</div>
-                        <div class="absolute left-0 bottom-0 text-[10px] text-gray-400 -ml-6">0.0</div>
+                        <div class="absolute left-0 top-0 text-[10px] text-gray-400 -ml-8">1.0</div>
+                        <div class="absolute left-0 bottom-0 text-[10px] text-gray-400 -ml-8">0.0</div>
                     </div>
-                    <div class="flex justify-between text-[10px] text-gray-400 mt-2 px-2">
+                    <div class="flex justify-between text-[10px] text-gray-400 mt-3 px-4 font-medium uppercase tracking-wider">
                         <span>2008</span>
                         <span>2012</span>
                         <span>2016</span>
@@ -302,49 +374,340 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t mt-8 py-4 text-center text-gray-400 text-xs">
-        <p>&copy; 2025 Gegenereerd Portfolio Overzicht</p>
+    <footer class="bg-white border-t mt-12 py-8 text-center text-gray-400 text-xs">
+        <p>&copy; 2025 Portfolio Bart Hakkenberg | Gegenereerd Overzicht</p>
     </footer>
 
-    <!-- PDF MODAL -->
+    <!-- MODAL (Unified for PDF and HTML) -->
     <div id="pdf-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <!-- Background backdrop -->
         <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm" onclick="closePdf()"></div>
-
         <div class="fixed inset-0 z-10 overflow-y-auto">
             <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-                
-                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-5xl h-[85vh] flex flex-col">
+                <div class="relative transform overflow-hidden rounded-xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-4xl h-[85vh] flex flex-col">
                     
                     <!-- Modal Header -->
-                    <div class="bg-gray-50 px-4 py-3 flex justify-between items-center border-b border-gray-200">
-                        <h3 class="text-base font-semibold leading-6 text-gray-900 flex items-center" id="modal-title">
-                            <i class="fas fa-file-pdf text-red-500 mr-2"></i>
+                    <div class="bg-gray-50 px-6 py-4 flex justify-between items-center border-b border-gray-200">
+                        <h3 class="text-lg font-bold leading-6 text-gray-800 flex items-center" id="modal-title">
+                            <i id="modal-icon" class="fas fa-file-pdf text-pms-355 mr-3"></i>
                             <span id="modal-doc-title">Document</span>
                         </h3>
-                        <button type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none" onclick="closePdf()">
+                        <button type="button" class="text-gray-400 hover:text-gray-600 focus:outline-none transition-colors" onclick="closePdf()">
                             <span class="sr-only">Sluiten</span>
-                            <i class="fas fa-times text-xl"></i>
+                            <i class="fas fa-times text-2xl"></i>
                         </button>
                     </div>
 
-                    <!-- Modal Body (Iframe) -->
-                    <div class="flex-1 bg-gray-100 relative">
-                        <div id="loader" class="absolute inset-0 flex items-center justify-center text-indigo-600 hidden">
-                            <i class="fas fa-circle-notch fa-spin text-3xl"></i>
+                    <!-- Modal Body -->
+                    <div class="flex-1 bg-gray-50 relative overflow-auto">
+                        
+                        <!-- PDF IFRAME -->
+                        <iframe id="pdf-frame" class="w-full h-full hidden" src="" allow="autoplay"></iframe>
+                        
+                        <!-- HTML CONTENT CONTAINER -->
+                        <div id="html-content" class="hidden p-8 md:p-10 bg-white min-h-full shadow-sm mx-auto max-w-4xl">
+                            <!-- Content Injected Here -->
                         </div>
-                        <!-- Placeholder Text if empty -->
-                        <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 hidden">
-                             <i class="fas fa-file-import text-5xl mb-4"></i>
-                             <p>Link volgt nog...</p>
+
+                        <!-- LOADER -->
+                        <div id="loader" class="absolute inset-0 flex items-center justify-center text-pms-355 hidden z-20 bg-white bg-opacity-90">
+                            <i class="fas fa-circle-notch fa-spin text-4xl"></i>
                         </div>
-                        <iframe id="pdf-frame" class="w-full h-full" src="" allow="autoplay"></iframe>
+                        
+                        <!-- EMPTY STATE -->
+                        <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-gray-300 hidden z-10">
+                             <i class="fas fa-file-import text-6xl mb-4"></i>
+                             <p class="font-medium">Link volgt nog...</p>
+                        </div>
+
                     </div>
-                    
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- HTML Content Templates (Hidden) -->
+    
+    <!-- Template: LD Criteria -->
+    <template id="ld_criteria_content">
+        <div class="max-w-3xl mx-auto font-sans">
+            <h2 class="text-2xl font-bold text-pms-355 mb-2">Overzicht van verantwoordelijkheden & projecten</h2>
+            <p class="text-gray-600 text-sm mb-8 italic border-b border-gray-200 pb-4">In lijn met de competenties van de Senior Docent (LD) / Onderwijskundig Expert.</p>
+            
+            <!-- Section 1 -->
+            <div class="mb-8">
+                <h3 class="font-bold text-gray-800 mb-3 flex items-center text-lg">
+                    <span class="bg-pms-355 text-white w-8 h-8 flex items-center justify-center rounded-full text-sm mr-3 shadow-sm">1</span>
+                    Richting & Sturing aan Onderwijsinnovatie
+                </h3>
+                <div class="pl-11">
+                    <div class="bg-green-50 text-green-800 text-sm p-3 rounded-md mb-3 border-l-4 border-pms-355">
+                        <em>Criteria: Werkt op basis van een conceptuele aanpak aan innovatie, is verbindend, heeft visie.</em>
+                    </div>
+                    <ul class="list-disc list-outside text-sm text-gray-600 space-y-2 pl-4">
+                        <li><strong>Aanjager & Beleidsmaker AI:</strong> Lid werkgroep AI, mede-ontwikkelaar beleidsframework, expert Dalton Voorburg.</li>
+                        <li><strong>Ontwerper Schoolbrede Hulpmiddelen:</strong> Concept Daltonagenda, Studiewijzer klas 1, toetsrooster.</li>
+                        <li><strong>Innovator BSM:</strong> Ontwikkeling PTA BSM 4/5/6 vwo, extern adviseur Maartenscollege.</li>
+                        <li><strong>Initiator Projecten:</strong> Projectweek mediawijsheid, Dalton Podcast Academy, Studiecampus, innovatiebudget.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="mb-8">
+                <h3 class="font-bold text-gray-800 mb-3 flex items-center text-lg">
+                    <span class="bg-pms-355 text-white w-8 h-8 flex items-center justify-center rounded-full text-sm mr-3 shadow-sm">2</span>
+                    Aansturen van Complexe Projecten
+                </h3>
+                <div class="pl-11">
+                    <div class="bg-green-50 text-green-800 text-sm p-3 rounded-md mb-3 border-l-4 border-pms-355">
+                        <em>Criteria: Stuurt complexe projecten aan; werkt aan open opdrachten; geeft functioneel leiding.</em>
+                    </div>
+                    <ul class="list-disc list-outside text-sm text-gray-600 space-y-2 pl-4">
+                        <li><strong>Privacy Officer (AVG):</strong> Formeel aanspreekpunt, overleg bestuur (Directietaak).</li>
+                        <li><strong>ICT Portefeuillehouder:</strong> Functioneel leidinggeven, visieontwikkeling (Directietaak LC+).</li>
+                        <li><strong>PLG Teamcoach:</strong> Leidinggeven aan docententeams klas 1.</li>
+                        <li><strong>Projectleider Standaardisatie:</strong> Transitie naar Google Docs.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="mb-8">
+                <h3 class="font-bold text-gray-800 mb-3 flex items-center text-lg">
+                    <span class="bg-pms-355 text-white w-8 h-8 flex items-center justify-center rounded-full text-sm mr-3 shadow-sm">3</span>
+                    Vraagbaak, Coach & Kennisdeler
+                </h3>
+                <div class="pl-11">
+                    <div class="bg-green-50 text-green-800 text-sm p-3 rounded-md mb-3 border-l-4 border-pms-355">
+                        <em>Criteria: Treedt op als vraagbaak/coach; geeft workshops.</em>
+                    </div>
+                    <ul class="list-disc list-outside text-sm text-gray-600 space-y-2 pl-4">
+                        <li><strong>Trainer:</strong> Trainingen AI voor docenten en OOP.</li>
+                        <li><strong>Opleider & Coach:</strong> Begeleider HALO-studenten, aanspreekpunt ASR Vitaliteit.</li>
+                        <li><strong>Adviseur Schoolleiding:</strong> Proactieve feedback en advies.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 4 -->
+            <div class="mb-8">
+                <h3 class="font-bold text-gray-800 mb-3 flex items-center text-lg">
+                    <span class="bg-pms-355 text-white w-8 h-8 flex items-center justify-center rounded-full text-sm mr-3 shadow-sm">4</span>
+                    Vakinhoudelijke Verbetering
+                </h3>
+                <div class="pl-11">
+                    <div class="bg-green-50 text-green-800 text-sm p-3 rounded-md mb-3 border-l-4 border-pms-355">
+                        <em>Criteria: Verantwoordelijk voor onderwijsinhoudelijke verbeteringen.</em>
+                    </div>
+                    <ul class="list-disc list-outside text-sm text-gray-600 space-y-2 pl-4">
+                        <li><strong>Kwaliteitszorg LO/BSM:</strong> Digitale visie (video-archief, iPads), PTA-ontwikkeling, uniforme mappenstructuur.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 5 -->
+            <div class="mb-8">
+                <h3 class="font-bold text-gray-800 mb-3 flex items-center text-lg">
+                    <span class="bg-pms-355 text-white w-8 h-8 flex items-center justify-center rounded-full text-sm mr-3 shadow-sm">5</span>
+                    Proactieve Ontwikkeling
+                </h3>
+                <div class="pl-11">
+                    <div class="bg-green-50 text-green-800 text-sm p-3 rounded-md mb-3 border-l-4 border-pms-355">
+                        <em>Criteria: Heeft visie, is analytisch, onderzoekend.</em>
+                    </div>
+                    <ul class="list-disc list-outside text-sm text-gray-600 space-y-2 pl-4">
+                        <li><strong>Professionele Ontwikkeling:</strong> Jaarlijkse POP-gesprekken over doorgroei.</li>
+                        <li><strong>Onderzoek Leiderschap:</strong> Meelopen directie, uitvoeren directietaken om LD-niveau te formaliseren.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Template: Feedback Docenten -->
+    <template id="feedback_collegas_content">
+        <div class="max-w-3xl mx-auto font-sans">
+            <h2 class="text-2xl font-bold text-pms-355 mb-2">Feedback van Collega's</h2>
+            <p class="text-gray-600 text-sm mb-8 italic border-b border-gray-200 pb-4">Samenvatting van feedbackgesprekken en evaluaties (o.a. Patrick, Brigitte, Mauricio, Daan).</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <!-- Algemeen -->
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-gray-800 mb-3 flex items-center text-base"><i class="fas fa-users text-pms-355 mr-2"></i>Algemeen & Communicatie</h3>
+                    <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded mb-3 font-semibold">Score: 4/5 - 5/5</span>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+                        <li>Zeer toegankelijk en "enorm bereikbaar".</li>
+                        <li>Prettige samenwerking, brengt rust (Brigitte).</li>
+                        <li>Ziet en waardeert kwaliteiten in anderen (Daan).</li>
+                    </ul>
+                </div>
+
+                <!-- ICT -->
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-gray-800 mb-3 flex items-center text-base"><i class="fas fa-laptop-code text-blue-600 mr-2"></i>ICT & Innovatie</h3>
+                    <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mb-3 font-semibold">Zichtbaar & Enthousiasmerend</span>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+                        <li>Sterk initiatief (5/5), deelt expertise (Gemini).</li>
+                        <li><em>Verbeterpunt:</em> Duidelijkheid in rolverdeling (wie doet wat?).</li>
+                        <li><em>Verbeterpunt:</em> Assertiviteit bij projecten ("vuist op tafel").</li>
+                    </ul>
+                </div>
+                
+                <!-- Vakinhoud -->
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm md:col-span-2 hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-gray-800 mb-3 flex items-center text-base"><i class="fas fa-book-open text-purple-600 mr-2"></i>Vakinhoud & Sectie</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-sm font-semibold text-gray-700 mb-2 border-b pb-1">Sterke punten:</p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                                <li>Motivatie leerlingen (5/5).</li>
+                                <li>Dalton-kennis is groot en inzetbaar.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-gray-700 mb-2 border-b pb-1">Wensen:</p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                                <li>Meer zichtbare vakinhoudelijke ontwikkeling.</li>
+                                <li>Delen van aanpassingen voor havo/vwo.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-6 border-b border-gray-200 pb-3">Actiepunten (Keep, Stop, Start)</h3>
+            
+            <div class="space-y-6">
+                <!-- KEEP -->
+                <div class="flex items-start bg-green-50 p-4 rounded-lg border border-green-100">
+                    <div class="bg-green-100 text-green-700 p-2 rounded-full mr-4 mt-0.5 shadow-sm"><i class="fas fa-check fa-lg"></i></div>
+                    <div>
+                        <h4 class="font-bold text-green-800 text-base mb-2">KEEP (Behouden)</h4>
+                        <ul class="text-sm text-gray-700 list-disc list-inside space-y-1.5">
+                            <li><strong>Doorzettingsvermogen:</strong> Vastbijten in visie en verantwoording vragen.</li>
+                            <li><strong>Kwaliteiten zien:</strong> Talent in collega's waarderen.</li>
+                            <li><strong>Rust & Verbinding:</strong> Kalmte in aanpak, focus op vernieuwing.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- STOP -->
+                <div class="flex items-start bg-red-50 p-4 rounded-lg border border-red-100">
+                    <div class="bg-red-100 text-red-700 p-2 rounded-full mr-4 mt-0.5 shadow-sm"><i class="fas fa-hand-paper fa-lg"></i></div>
+                    <div>
+                        <h4 class="font-bold text-red-800 text-base mb-2">STOP (Minder doen)</h4>
+                        <ul class="text-sm text-gray-700 list-disc list-inside space-y-1.5">
+                            <li><strong>Delegeren:</strong> "Erbij gegooide" taken afstoten; focus op visie houden.</li>
+                            <li><em>Positief:</em> Reeds gestopt met regelen randzaken tijdens sectievergaderingen.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- START -->
+                <div class="flex items-start bg-blue-50 p-4 rounded-lg border border-blue-100">
+                    <div class="bg-blue-100 text-blue-700 p-2 rounded-full mr-4 mt-0.5 shadow-sm"><i class="fas fa-rocket fa-lg"></i></div>
+                    <div>
+                        <h4 class="font-bold text-blue-800 text-base mb-2">START (Meer doen / Kansen)</h4>
+                        <ul class="text-sm text-gray-700 list-disc list-inside space-y-1.5">
+                            <li><strong>Kennisbron Vakinhoud:</strong> Proactief delen van artikelen, podcasts en werkvormen.</li>
+                            <li><strong>Techniekskills Groep:</strong> Potentiële rol als hoofd van technische onderdelen (crew, privacy, masterclasses).</li>
+                            <li><strong>Zichtbaarheid:</strong> Schoolbreed laten zien waar je actief bent.</li>
+                            <li><strong>Helderheid:</strong> ICT-rolverdeling expliciet maken.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Template: Feedback Leerlingen -->
+    <template id="feedback_leerlingen_content">
+        <div class="max-w-3xl mx-auto font-sans">
+            <h2 class="text-2xl font-bold text-pms-355 mb-2">Feedback van Leerlingen</h2>
+            <p class="text-gray-600 text-sm mb-8 italic border-b border-gray-200 pb-4">Samenvatting van leerling-enquêtes en open antwoorden. Het algemene beeld is zeer positief met scores 'sterk' of 'voldoende'.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <!-- Algemeen & Sterke Punten -->
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm md:col-span-2 hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-gray-800 mb-3 flex items-center text-base"><i class="fas fa-thumbs-up text-pms-355 mr-2"></i>Algemeen & Sterke Punten</h3>
+                    <p class="text-sm text-gray-500 mb-3 italic">Meest genoemd in open antwoorden:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+                            <li><strong>Uitleg & Kennis:</strong> Duidelijke uitleg, veel vakkennis, goed lesplan.</li>
+                            <li><strong>Klassenmanagement:</strong> Goed orde houden, ontspannen werksfeer.</li>
+                        </ul>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+                             <li><strong>Persoonlijkheid:</strong> Rustig, kalm, zelfverzekerd, aardig & respectvol.</li>
+                             <li><strong>Veiligheid:</strong> Leerlingen kunnen zichzelf zijn.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sfeer & Persoonlijkheid -->
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-gray-800 mb-3 flex items-center text-base"><i class="fas fa-smile text-blue-500 mr-2"></i>Sfeer & Persoonlijkheid</h3>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+                        <li>Ontspannen sfeer waarin goed gewerkt wordt.</li>
+                        <li>Docent is positief, enthousiast en behulpzaam.</li>
+                        <li>Rustige en kalme benadering wordt gewaardeerd.</li>
+                    </ul>
+                </div>
+                
+                <!-- Lesinhoud -->
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-gray-800 mb-3 flex items-center text-base"><i class="fas fa-running text-purple-500 mr-2"></i>Lesinhoud (LO)</h3>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+                        <li>Lessen worden als "leuk" en "actief" ervaren.</li>
+                        <li>Ruimte om zelf te werken.</li>
+                        <li>Goede lesdoelen.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-6 border-b border-gray-200 pb-3">Evaluatie & Actiepunten</h3>
+            
+            <div class="space-y-6">
+                <!-- STERK (Keep) -->
+                <div class="flex items-start bg-green-50 p-4 rounded-lg border border-green-100">
+                    <div class="bg-green-100 text-green-700 p-2 rounded-full mr-4 mt-0.5 shadow-sm"><i class="fas fa-check fa-lg"></i></div>
+                    <div>
+                        <h4 class="font-bold text-green-800 text-base mb-2">STERKE PUNTEN (Blijven doen)</h4>
+                        <ul class="text-sm text-gray-700 list-disc list-inside space-y-1.5">
+                            <li>Duidelijke instructie en structuur.</li>
+                            <li>Positieve, rustige benadering en respectvolle omgang.</li>
+                            <li>Sfeerbeheer in de klas.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- VERBETERPUNTEN -->
+                <div class="flex items-start bg-yellow-50 p-4 rounded-lg border border-yellow-100">
+                    <div class="bg-yellow-100 text-yellow-700 p-2 rounded-full mr-4 mt-0.5 shadow-sm"><i class="fas fa-lightbulb fa-lg"></i></div>
+                    <div>
+                        <h4 class="font-bold text-yellow-800 text-base mb-2">VERBETERPUNTEN (Aan werken)</h4>
+                        <ul class="text-sm text-gray-700 list-disc list-inside space-y-1.5">
+                            <li><strong>Variatie:</strong> Meer afwisseling in spellen/activiteiten (niet steeds hetzelfde).</li>
+                            <li><strong>Differentiatie:</strong> Eerlijkere teams & oog voor leerlingen die 'minder goed' zijn.</li>
+                            <li><strong>Inspraak:</strong> Meer leerling-inbreng in leskeuzes.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- OVERIG -->
+                <div class="flex items-start bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <div class="bg-white text-gray-600 p-2 rounded-full mr-4 mt-0.5 shadow-sm"><i class="fas fa-info fa-lg"></i></div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-base mb-2">OVERIGE OPMERKINGEN</h4>
+                        <ul class="text-sm text-gray-700 list-disc list-inside space-y-1.5">
+                            <li>Context: Vragen over huiswerk/planning zijn lastig voor LO.</li>
+                            <li>Uitschieter: Eén zeer negatieve reactie (contrast met rest).</li>
+                            <li>Specifiek: Aandachtspunt omtrent hoofddoek/sieraden regelgeving.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
 
     <script>
         // --- DATA ---
@@ -383,31 +746,56 @@
         ];
 
         // --- MODAL FUNCTIONS ---
-        function openPdf(url, title) {
-            const modal = document.getElementById('pdf-modal');
-            const frame = document.getElementById('pdf-frame');
-            const titleEl = document.getElementById('modal-doc-title');
-            const loader = document.getElementById('loader');
-            const emptyState = document.getElementById('empty-state');
+        
+        function resetModal() {
+            document.getElementById('pdf-frame').classList.add('hidden');
+            document.getElementById('html-content').classList.add('hidden');
+            document.getElementById('empty-state').classList.add('hidden');
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('pdf-frame').src = '';
+            document.getElementById('html-content').innerHTML = '';
+        }
 
+        function openPdf(url, title) {
+            resetModal();
+            const modal = document.getElementById('pdf-modal');
+            const titleEl = document.getElementById('modal-doc-title');
+            const iconEl = document.getElementById('modal-icon');
+            
             titleEl.textContent = title;
+            iconEl.className = "fas fa-file-pdf text-red-500 mr-3";
             
             modal.classList.remove('hidden');
             document.body.classList.add('modal-open');
 
             if (url) {
-                // Show Loader
-                loader.classList.remove('hidden');
-                emptyState.classList.add('hidden');
+                document.getElementById('loader').classList.remove('hidden');
+                const frame = document.getElementById('pdf-frame');
                 frame.classList.remove('hidden');
                 frame.src = url;
             } else {
-                // Show Empty State
-                loader.classList.add('hidden');
-                frame.classList.add('hidden');
-                emptyState.classList.remove('hidden');
-                frame.src = '';
+                document.getElementById('empty-state').classList.remove('hidden');
             }
+        }
+
+        function openHtml(templateId, title) {
+            resetModal();
+            const modal = document.getElementById('pdf-modal');
+            const titleEl = document.getElementById('modal-doc-title');
+            const iconEl = document.getElementById('modal-icon');
+            const htmlContainer = document.getElementById('html-content');
+            
+            titleEl.textContent = title;
+            iconEl.className = "fas fa-clipboard-check text-pms-381 mr-3"; 
+            
+            const template = document.getElementById(templateId + '_content');
+            if(template) {
+                htmlContainer.appendChild(template.content.cloneNode(true));
+                htmlContainer.classList.remove('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            document.body.classList.add('modal-open');
         }
 
         function hideLoader() {
@@ -416,14 +804,9 @@
 
         function closePdf() {
             const modal = document.getElementById('pdf-modal');
-            const frame = document.getElementById('pdf-frame');
-            
             modal.classList.add('hidden');
             document.body.classList.remove('modal-open');
-            
-            setTimeout(() => {
-                frame.src = '';
-            }, 200);
+            setTimeout(resetModal, 200);
         }
 
         document.addEventListener('keydown', function(event) {
@@ -433,104 +816,37 @@
         });
 
         // --- RENDER FUNCTIONS ---
-
         function renderTimeline() {
             const container = document.getElementById('timeline-container');
             container.innerHTML = '';
-
             data.forEach((item, index) => {
                 const isLeft = index % 2 === 0; 
+                const classesHtml = item.teaching.classes.map(cls => `<span class="inline-block bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded mr-1 mb-1 border border-gray-200">${cls}</span>`).join('');
+                const tasksHtml = item.tasks.map(task => `<li class="flex items-center text-xs text-gray-600"><span class="w-1.5 h-1.5 bg-pms-355 rounded-full mr-2"></span>${task}</li>`).join('');
+                const coursesHtml = item.courses.length > 0 ? `<div class="mt-3 pt-2 border-t border-dashed border-gray-100"><p class="text-[10px] font-bold text-pms-355 mb-1"><i class="fas fa-graduation-cap mr-1"></i>Scholing:</p><ul class="text-[10px] text-gray-500 italic leading-tight">${item.courses.map(c => `<li>${c}</li>`).join('')}</ul></div>` : '';
+                const cardClasses = `timeline-card bg-white p-5 rounded-xl shadow-sm border-pms-355 relative ${isLeft ? 'border-r-4' : 'border-l-4'}`;
+                const cardContent = `<div class="${cardClasses}"><div class="flex justify-between items-start mb-3"><h3 class="font-bold text-sm text-pms-355">${item.period}</h3><div class="flex space-x-1"><span class="bg-green-50 text-green-800 text-[10px] font-semibold px-2 py-0.5 rounded">${item.teaching.fte}</span><span class="bg-blue-50 text-blue-800 text-[10px] font-semibold px-2 py-0.5 rounded">${item.teaching.scale}</span></div></div><ul class="space-y-1 mb-3">${tasksHtml}</ul><div class="mt-2"><div class="flex flex-wrap">${classesHtml}</div></div>${coursesHtml}</div>`;
                 
-                const classesHtml = item.teaching.classes.map(cls => 
-                    `<span class="inline-block bg-gray-100 text-gray-600 text-[10px] px-1.5 py-0.5 rounded mr-1 mb-1 border border-gray-200">${cls}</span>`
-                ).join('');
-
-                const tasksHtml = item.tasks.map(task => 
-                    `<li class="flex items-center text-xs text-gray-600"><span class="w-1 h-1 bg-indigo-400 rounded-full mr-1.5"></span>${task}</li>`
-                ).join('');
-
-                const coursesHtml = item.courses.length > 0 ? 
-                    `<div class="mt-2 pt-1 border-t border-dashed border-gray-100">
-                        <p class="text-[10px] font-bold text-emerald-600 mb-0.5"><i class="fas fa-graduation-cap mr-1"></i>Scholing:</p>
-                        <ul class="text-[10px] text-gray-500 italic leading-tight">${item.courses.map(c => `<li>${c}</li>`).join('')}</ul>
-                    </div>` : '';
-
-                const cardClasses = `timeline-card bg-white p-4 rounded-lg shadow-sm border-indigo-500 relative ${isLeft ? 'border-r-4' : 'border-l-4'}`;
-                
-                const cardContent = `
-                    <div class="${cardClasses}">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-bold text-sm text-indigo-700">${item.period}</h3>
-                            <div class="flex space-x-1">
-                                <span class="bg-blue-50 text-blue-700 text-[10px] font-semibold px-1.5 py-0.5 rounded">${item.teaching.fte}</span>
-                                <span class="bg-purple-50 text-purple-700 text-[10px] font-semibold px-1.5 py-0.5 rounded">${item.teaching.scale}</span>
-                            </div>
-                        </div>
-                        <ul class="space-y-0.5 mb-2">
-                            ${tasksHtml}
-                        </ul>
-                        <div class="mt-1">
-                            <div class="flex flex-wrap">
-                                ${classesHtml}
-                            </div>
-                        </div>
-                        ${coursesHtml}
-                    </div>
-                `;
-
-                const html = `
-                    <div class="flex flex-col md:flex-row items-center justify-between w-full mb-4 md:mb-0">
-                        <div class="w-full md:w-5/12 md:text-right pr-0 md:pr-8 pl-12 md:pl-0 order-2 md:order-1 relative">
-                            ${isLeft ? cardContent : ''}
-                        </div>
-                        <div class="absolute left-[24px] md:static md:w-2/12 flex justify-center order-1 md:order-2 z-10 h-full md:h-auto items-start md:items-center pt-4 md:pt-0">
-                             <div class="bg-indigo-600 shadow-md w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold border-2 border-white">
-                                ${(2025 - index).toString().slice(-2)}
-                            </div>
-                        </div>
-                        <div class="w-full md:w-5/12 md:text-left pl-0 md:pl-8 pl-12 md:pl-0 order-3 md:order-3 relative mt-2 md:mt-0">
-                             ${!isLeft ? cardContent : ''}
-                        </div>
-                    </div>
-                `;
+                const html = `<div class="flex flex-col md:flex-row items-center justify-between w-full mb-8 md:mb-0"><div class="w-full md:w-5/12 md:text-right pr-0 md:pr-10 pl-12 md:pl-0 order-2 md:order-1 relative">${isLeft ? cardContent : ''}</div><div class="absolute left-[24px] md:static md:w-2/12 flex justify-center order-1 md:order-2 z-10 h-full md:h-auto items-start md:items-center pt-4 md:pt-0"><div class="bg-pms-355 shadow-lg w-12 h-12 rounded-full flex items-center justify-center text-white text-sm font-bold border-4 border-white z-20">${(2025 - index).toString().slice(-2)}</div></div><div class="w-full md:w-5/12 md:text-left pl-0 md:pl-10 pl-12 md:pl-0 order-3 md:order-3 relative mt-2 md:mt-0">${!isLeft ? cardContent : ''}</div></div>`;
                 container.innerHTML += html;
             });
         }
 
         function renderCourses() {
             const container = document.getElementById('courses-list');
-            container.innerHTML = allCourses.map(course => `
-                <div class="flex items-center border-b border-gray-50 pb-2 last:border-0">
-                    <div class="bg-emerald-50 text-emerald-600 rounded p-1.5 mr-2">
-                        <i class="fas fa-certificate text-xs"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-gray-700 text-xs">${course.name}</h4>
-                        <span class="text-[10px] text-gray-400">${course.year}</span>
-                    </div>
-                </div>
-            `).join('');
+            container.innerHTML = allCourses.map(course => `<div class="flex items-center border-b border-gray-50 pb-3 last:border-0"><div class="bg-green-50 text-pms-355 rounded-lg p-2 mr-3"><i class="fas fa-certificate text-xs"></i></div><div><h4 class="font-semibold text-gray-700 text-xs">${course.name}</h4><span class="text-[10px] text-gray-400">${course.year}</span></div></div>`).join('');
         }
 
         function renderChart() {
             const container = document.getElementById('fte-chart');
             const maxFte = 1.2;
             const reversedData = [...data].reverse();
-            
             reversedData.forEach((item, index) => {
                 const fte = parseFloat(item.teaching.fte.replace(',', '.'));
                 const heightPercent = (fte / maxFte) * 100;
-                let barColor = "bg-indigo-400";
-                if(item.teaching.scale === "LC") barColor = "bg-indigo-600";
-
-                const barHtml = `
-                    <div class="flex flex-col items-center justify-end h-full w-full group relative">
-                         <div class="opacity-0 group-hover:opacity-100 absolute bottom-full mb-1 bg-gray-800 text-white text-[10px] px-1 rounded pointer-events-none transition-opacity whitespace-nowrap z-10">
-                            ${item.period.split(' ')[0]}: ${fte} FTE
-                         </div>
-                         <div class="w-2 md:w-4 ${barColor} rounded-t bar-growth hover:bg-purple-500 transition-colors" style="height: ${heightPercent}%; animation-delay: ${index * 50}ms"></div>
-                    </div>
-                `;
+                let barColor = "bg-green-400";
+                if(item.teaching.scale === "LC") barColor = "bg-pms-355";
+                const barHtml = `<div class="flex flex-col items-center justify-end h-full w-full group relative"><div class="opacity-0 group-hover:opacity-100 absolute bottom-full mb-2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded pointer-events-none transition-opacity whitespace-nowrap z-10 shadow-lg">${item.period.split(' ')[0]}: ${fte} FTE</div><div class="w-3 md:w-6 ${barColor} rounded-t-md bar-growth hover:bg-green-600 transition-colors shadow-sm" style="height: ${heightPercent}%; animation-delay: ${index * 50}ms"></div></div>`;
                 container.innerHTML += barHtml;
             });
         }
@@ -545,27 +861,30 @@
                 chronoView.classList.remove('hidden');
                 catView.classList.add('hidden');
                 
-                btnChrono.className = "px-3 py-1.5 rounded-md text-xs font-medium transition-all bg-white text-indigo-700 shadow";
-                btnCat.className = "px-3 py-1.5 rounded-md text-xs font-medium transition-all text-indigo-200 hover:bg-indigo-600";
+                btnChrono.classList.add('view-btn-active');
+                btnChrono.classList.remove('view-btn-inactive', 'hover:bg-green-50');
+                
+                btnCat.classList.add('view-btn-inactive', 'hover:bg-green-50');
+                btnCat.classList.remove('view-btn-active');
             } else {
                 chronoView.classList.add('hidden');
                 catView.classList.remove('hidden');
 
-                btnCat.className = "px-3 py-1.5 rounded-md text-xs font-medium transition-all bg-white text-indigo-700 shadow";
-                btnChrono.className = "px-3 py-1.5 rounded-md text-xs font-medium transition-all text-indigo-200 hover:bg-indigo-600";
+                btnCat.classList.add('view-btn-active');
+                btnCat.classList.remove('view-btn-inactive', 'hover:bg-green-50');
+                
+                btnChrono.classList.add('view-btn-inactive', 'hover:bg-green-50');
+                btnChrono.classList.remove('view-btn-active');
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             const frame = document.getElementById('pdf-frame');
-            if (frame) {
-                frame.onload = hideLoader;
-            }
+            if (frame) { frame.onload = hideLoader; }
             renderTimeline();
             renderCourses();
             renderChart();
         });
-
     </script>
 </body>
 </html>
